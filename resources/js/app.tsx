@@ -10,6 +10,7 @@ import { RootLayout } from "./layouts/root.layout";
 import { LoginPage } from "./pages/login";
 import { WelcomePage } from "./pages/welcome";
 import { Protected, Public } from "./components/AuthRoute";
+import { NotFoundPage } from "./pages/404";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ function Router() {
                         }
                     />
                 </Route>
+                <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </BrowserRouter>
     );
