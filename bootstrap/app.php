@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Route;
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         using: function () {
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
-
             Route::middleware('api')
                 ->prefix('api')
                 ->group(base_path('routes/clini/auth.php'));
+
+            Route::middleware('web')
+                ->group(base_path('routes/web.php'));
         },
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
