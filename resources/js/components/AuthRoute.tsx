@@ -1,12 +1,14 @@
 import { useAuth } from "@/lib/hooks/useAuth";
 import { ReactNode } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 
 export const Protected = ({ children }: { children: ReactNode }) => {
     const { user } = useAuth();
+    const [searchParams] = useSearchParams();
+    const queryString = searchParams.toString();
 
     if (!user) {
-        return <Navigate to="/login" />;
+        return <Navigate to={`/login?${queryString}`} />;
     }
 
     return children;
@@ -14,9 +16,11 @@ export const Protected = ({ children }: { children: ReactNode }) => {
 
 export const Public = ({ children }: { children: ReactNode }) => {
     const { user } = useAuth();
+    const [searchParams] = useSearchParams();
+    const queryString = searchParams.toString();
 
     if (user) {
-        return <Navigate to="/" />;
+        return <Navigate to={`/?${queryString}`} />;
     }
 
     return children;
