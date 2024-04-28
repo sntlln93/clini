@@ -11,6 +11,7 @@ import { LoginPage } from "./pages/login";
 import { WelcomePage } from "./pages/welcome";
 import { Protected, Public } from "./components/AuthRoute";
 import { NotFoundPage } from "./pages/404";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +22,9 @@ if (!rootElement.innerHTML) {
     root.render(
         <StrictMode>
             <QueryClientProvider client={queryClient}>
-                <Router />
+                <TooltipProvider>
+                    <Router />
+                </TooltipProvider>
                 <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
         </StrictMode>
