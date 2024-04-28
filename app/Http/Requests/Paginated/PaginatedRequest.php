@@ -7,6 +7,9 @@ use Illuminate\Validation\Rule;
 
 abstract class PaginatedRequest extends FormRequest
 {
+    /** @var array<string> */
+    protected $sortable_columns = [];
+
     /**
      * Determine if the user is authorized to make this request.
      */

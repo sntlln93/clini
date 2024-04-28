@@ -37,7 +37,7 @@
         }
     },
     "scripts": {
-        "lint": "./vendor/bin/phpstan analyse",
+        "lint": "./vendor/bin/phpstan analyse --no-progress",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

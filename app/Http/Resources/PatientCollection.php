@@ -17,10 +17,13 @@ class PatientCollection extends ResourceCollection
     /**
      * Transform the resource collection into an array.
      *
-     * @return array<string, mixed>
+     * @return array<string,string|int>
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        /** @var array<string,string|int> $results */
+        $results = parent::toArray($request);
+
+        return $results;
     }
 }

@@ -14,6 +14,7 @@ class GetPatientsController extends Controller
 {
     public function __invoke(PaginatedPatientRequest $request): PatientCollection
     {
+        /** @var array<string,string> $validated */
         $validated = $request->validated();
 
         /** @var Builder<Model> $patient_builder */

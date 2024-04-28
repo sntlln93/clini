@@ -32,7 +32,7 @@ class FilterPaginatedResultService
 
     /**
      * @param  array<string,string>  $filters
-     * @return LengthAwarePaginator<mixed>
+     * @return LengthAwarePaginator<\Illuminate\Database\Eloquent\Model>
      */
     public function apply(array $filters): LengthAwarePaginator
     {
@@ -51,11 +51,11 @@ class FilterPaginatedResultService
         }
 
         $per_page = array_key_exists('per_page', $filters)
-            ? $filters['per_page']
+            ? (int) $filters['per_page']
             : 10;
 
         $page = array_key_exists('page', $filters)
-            ? $filters['page']
+            ? (int) $filters['page']
             : 1;
 
         return $this->builder->paginate($per_page);
