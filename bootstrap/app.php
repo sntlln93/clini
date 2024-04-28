@@ -9,8 +9,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         using: function () {
             Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/clini/auth.php'));
+                ->prefix('api')->group(base_path('routes/clini/auth.php'));
+
+            Route::middleware('api')
+                ->prefix('api')->group(base_path('routes/clini/patients.php'));
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
