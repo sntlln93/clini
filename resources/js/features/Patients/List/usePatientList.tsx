@@ -40,7 +40,7 @@ export function usePatientsList() {
     const toPage = (page: number) => {
         const propagatedQueryString = queryToString({ ...qs, page });
 
-        navigate(`/?${propagatedQueryString}`, {
+        navigate(`/patients?${propagatedQueryString}`, {
             replace: true,
         });
     };

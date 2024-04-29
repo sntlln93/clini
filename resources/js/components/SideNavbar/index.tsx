@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronRight, ChevronLeft, Users } from "lucide-react";
+import { ChevronRight, Users, Home } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Nav } from "./Nav";
@@ -39,13 +39,13 @@ export default function SideNavbar() {
 
 const links: NavLink[] = [
     {
-        title: "Pacientes",
-        icon: Users,
+        title: "Inicio",
+        icon: Home,
         href: "/",
     },
-    // {
-    //   title: "Configuración",
-    //   icon: Settings,
-    //   href: "/settings",
-    // },
+    {
+        title: "Pacientes",
+        icon: Users,
+        href: "/patients",
+    },
 ];
