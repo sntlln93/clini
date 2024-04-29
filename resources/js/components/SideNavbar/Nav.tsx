@@ -5,7 +5,7 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "react-router-dom";
-import { buttonVariants } from "../ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { NavProps } from "./types";
 
 export function Nav({ links, isCollapsed }: NavProps) {
