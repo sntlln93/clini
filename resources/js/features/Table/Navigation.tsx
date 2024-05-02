@@ -19,6 +19,7 @@ export function Navigation({
                 <PaginationItem>
                     <PaginationPrevious
                         onClick={() => toPage(currentPage - 1)}
+                        disabled={currentPage === 1}
                     />
                 </PaginationItem>
                 {Array.from({ length: totalPages }, (_, index) => {
@@ -48,7 +49,10 @@ export function Navigation({
                     return null;
                 })}
                 <PaginationItem>
-                    <PaginationNext onClick={() => toPage(currentPage + 1)} />
+                    <PaginationNext
+                        onClick={() => toPage(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                    />
                 </PaginationItem>
             </PaginationContent>
         </Pagination>
