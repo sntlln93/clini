@@ -1,5 +1,5 @@
 import { useToast } from "@/components/ui/use-toast";
-import { ApiValidationError } from "@/types/api";
+import { type ApiValidationError } from "@/types/api";
 import { authAtom } from "@/lib/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
@@ -8,10 +8,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { type UserCredentials, loginSchema } from "../auth.schema";
 import { login } from "../auth.service";
+import { usePreservedRedirect } from "@/lib/hooks/usePreservedRedirect";
 
 export function useLoginAction() {
     const { toast } = useToast();
     const navigate = useNavigate();
+    const redirectPath = usePreservedRedirect();
 
     const setAuth = useSetAtom(authAtom);
     const { mutate: attemptLogin, isPending: loginIsPending } = useMutation({
@@ -23,7 +25,7 @@ export function useLoginAction() {
             }),
         onSuccess: (data) => {
             setAuth(data.token);
-            navigate("/");
+            navigate(redirectPath);
         },
         mutationFn: login,
     });

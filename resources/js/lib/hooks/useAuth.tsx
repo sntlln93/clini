@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { checkAuth } from "../services/check-auth";
-import { TokenAtom } from "@/types/auth";
+import { type TokenAtom } from "@/types/auth";
 
 export const authAtom = atomWithStorage<TokenAtom>("auth", null);
 
@@ -18,5 +18,5 @@ export function useAuth() {
         retry: false,
     });
 
-    return { isAuthenticated: true, isPending, isError, user };
+    return { isPending, isError, user };
 }

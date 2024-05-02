@@ -1,26 +1,28 @@
 import { useAuth } from "@/lib/hooks/useAuth";
-import { ReactNode } from "react";
-import { Navigate, useSearchParams } from "react-router-dom";
+import { PropsWithChildren } from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import { usePreservedRedirect } from "@/lib/hooks/usePreservedRedirect";
 
-export const Protected = ({ children }: { children: ReactNode }) => {
+export const Protected = ({ children }: PropsWithChildren) => {
     const { user } = useAuth();
-    const [searchParams] = useSearchParams();
-    const queryString = searchParams.toString();
+
+    const { pathname, search } = useLocation();
+    const redirectPath = encodeURIComponent(pathname + search);
+    const queryString = pathname !== "/" ? `?redirect=${redirectPath}` : "";
 
     if (!user) {
-        return <Navigate to={`/login?${queryString}`} />;
+        return <Navigate to={`/login${queryString}`} />;
     }
 
     return children;
 };
 
-export const Public = ({ children }: { children: ReactNode }) => {
+export const Public = ({ children }: PropsWithChildren) => {
     const { user } = useAuth();
-    const [searchParams] = useSearchParams();
-    const queryString = searchParams.toString();
+    const redirectPath = usePreservedRedirect();
 
     if (user) {
-        return <Navigate to={`/?${queryString}`} />;
+        return <Navigate to={redirectPath} />;
     }
 
     return children;
