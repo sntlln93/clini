@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Clini\GetPatientsController;
+use App\Http\Controllers\Clini\Patients\GetPatientsController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {

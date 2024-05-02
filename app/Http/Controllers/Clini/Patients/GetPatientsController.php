@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Clini;
+namespace App\Http\Controllers\Clini\Patients;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Paginated\PaginatedPatientRequest;
