@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
 
+composer --version
 php --version
 
-echo "Update composer to version 2"
-composer self-update --2
-
 echo "Running composer"
-composer global require hirak/prestissimo
 composer install --no-dev --working-dir=/var/www/html
 
 echo "Caching config..."
