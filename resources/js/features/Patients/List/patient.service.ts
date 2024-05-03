@@ -1,8 +1,12 @@
 import axios from "axios";
-import { PaginatedRequest, Patient, QueryString } from "./types";
 import { queryToString } from "@/lib/utils";
+import { type PaginatedRequest, type PaginationQueryString } from "@/types/api";
+import { type Patient } from "@/types/entities";
 
-export const getPatients = async (token: string, queryString: QueryString) => {
+export const getPatients = async (
+    token: string,
+    queryString: PaginationQueryString
+) => {
     const qs = queryToString(queryString);
 
     const response = await axios.get<PaginatedRequest<Patient>>(

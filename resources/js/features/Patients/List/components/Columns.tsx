@@ -1,5 +1,4 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { Patient } from "../types";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown, User2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -9,6 +8,9 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useSorting } from "@/lib/hooks/useSorting";
+import { type Patient } from "@/types/entities";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 
 export const columns: ColumnDef<Patient>[] = [
     {
@@ -92,7 +94,7 @@ export const columns: ColumnDef<Patient>[] = [
         },
     },
     {
-        accessorKey: "date_of_birth",
+        accessorKey: "dateOfBirth",
         header: () => {
             const { sortBy } = useSorting();
 
@@ -113,6 +115,10 @@ export const columns: ColumnDef<Patient>[] = [
                 </Tooltip>
             );
         },
+        cell: ({ row }) =>
+            format(row.original.dateOfBirth, "dd 'de' LLLL',' yyyy", {
+                locale: es,
+            }),
     },
     {
         header: "Acciones",
@@ -133,8 +139,7 @@ export const columns: ColumnDef<Patient>[] = [
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                            Ver información de {patient.names}{" "}
-                            {patient.lastname}
+                            Ver información de {patient.fullName}
                         </TooltipContent>
                     </Tooltip>
                 </div>
