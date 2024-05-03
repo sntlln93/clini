@@ -26,7 +26,8 @@ class PatientResource extends JsonResource
             'dni' => $this->resource->dni,
             'names' => $this->resource->names,
             'lastname' => $this->resource->lastname,
-            'date_of_birth' => $this->resource->date_of_birth,
+            'fullName' => $this->resource->lastname.', '.$this->resource->names,
+            'dateOfBirth' => $this->resource->date_of_birth,
             'sex' => strtoupper($this->resource->sex),
         ];
     }
