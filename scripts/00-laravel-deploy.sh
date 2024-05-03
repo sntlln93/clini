@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+php --version
+
 echo "Update composer to version 2"
 composer self-update --2
 
