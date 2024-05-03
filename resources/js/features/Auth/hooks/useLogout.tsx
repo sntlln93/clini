@@ -2,14 +2,13 @@ import { useMutation } from "@tanstack/react-query";
 import { logout } from "../auth.service";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
-import { useAtom } from "jotai";
-import { authAtom } from "@/lib/hooks/useAuth";
+import { useStorageState } from "@/lib/hooks/useStorageState";
 
 export function useLogoutAction() {
     const { toast } = useToast();
     const navigate = useNavigate();
 
-    const [auth, setAuth] = useAtom(authAtom);
+    const [auth, setAuth] = useStorageState("token");
 
     const { mutate: attemptLogout, isPending: logoutIsPending } = useMutation({
         onError: () =>

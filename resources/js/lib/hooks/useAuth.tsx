@@ -1,13 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { useAtomValue } from "jotai";
-import { atomWithStorage } from "jotai/utils";
 import { checkAuth } from "../services/check-auth";
-import { type TokenAtom } from "@/types/auth";
-
-export const authAtom = atomWithStorage<TokenAtom>("auth", null);
+import { useStorageState } from "./useStorageState";
 
 export function useAuth() {
-    const auth = useAtomValue(authAtom);
+    const [auth] = useStorageState("token");
     const {
         data: user,
         isPending,
@@ -15,7 +11,7 @@ export function useAuth() {
     } = useQuery({
         queryKey: ["auth"],
         queryFn: () => checkAuth(auth),
-        retry: false,
+        enabled: !!auth,
     });
 
     return { isPending, isError, user };

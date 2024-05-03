@@ -1,21 +1,20 @@
 import { useToast } from "@/components/ui/use-toast";
 import { type ApiValidationError } from "@/types/api";
-import { authAtom } from "@/lib/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { useSetAtom } from "jotai";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { type UserCredentials, loginSchema } from "../auth.schema";
 import { login } from "../auth.service";
 import { usePreservedRedirect } from "@/lib/hooks/usePreservedRedirect";
+import { useStorageState } from "@/lib/hooks/useStorageState";
 
 export function useLoginAction() {
     const { toast } = useToast();
     const navigate = useNavigate();
     const redirectPath = usePreservedRedirect();
 
-    const setAuth = useSetAtom(authAtom);
+    const [, setAuth] = useStorageState("token");
     const { mutate: attemptLogin, isPending: loginIsPending } = useMutation({
         onError: ({ response }: ApiValidationError) =>
             toast({

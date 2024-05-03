@@ -1,14 +1,13 @@
-import { authAtom } from "@/lib/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { format, isSameDay } from "date-fns";
-import { useAtomValue } from "jotai";
 import { useState } from "react";
 import { getAppointments } from "./appointment.service";
 import { type Month } from "./types";
 import { type Appointment } from "@/types/entities";
+import { useStorageState } from "@/lib/hooks/useStorageState";
 
 export function useAppointments() {
-    const token = useAtomValue(authAtom);
+    const [token] = useStorageState("token");
 
     const [selected, setSelected] = useState<number>();
 

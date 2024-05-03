@@ -1,14 +1,13 @@
-import { useAtomValue } from "jotai";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { authAtom } from "@/lib/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { getPatients } from "./patient.service";
 import { queryToString } from "@/lib/utils";
 import { useDebounce } from "@uidotdev/usehooks";
+import { useStorageState } from "@/lib/hooks/useStorageState";
 
 export function usePatientsList() {
     const navigate = useNavigate();
-    const token = useAtomValue(authAtom);
+    const [token] = useStorageState("token");
 
     let [searchParams, setSearchParams] = useSearchParams({
         page: "1",
