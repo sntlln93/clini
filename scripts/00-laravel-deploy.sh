@@ -4,7 +4,10 @@ composer --version
 php --version
 
 echo "Running composer"
-composer install --no-dev --working-dir=/var/www/html
+composer install --working-dir=/var/www/html
+
+echo "Running npm"
+npm install --working-dir=/var/www/html
 
 echo "Caching config..."
 php artisan config:cache

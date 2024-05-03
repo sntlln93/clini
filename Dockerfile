@@ -14,6 +14,8 @@ ENV APP_ENV production
 ENV APP_DEBUG false
 ENV LOG_CHANNEL stderr
 
+RUN apk add --update nodejs npm
+
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
