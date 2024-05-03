@@ -11,4 +11,4 @@ export type User = {
     updated_at: Date;
 };
 
-export type TokenAtom = string | null;
+export type Token = string;

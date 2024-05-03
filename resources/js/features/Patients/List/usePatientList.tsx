@@ -33,7 +33,8 @@ export function usePatientsList() {
         isError,
     } = useQuery({
         queryKey: ["patients", debouncedQueryString],
-        queryFn: () => getPatients(token as string, qs),
+        queryFn: () => getPatients(token!, qs),
+        enabled: !!token,
     });
 
     const toPage = (page: number) => {

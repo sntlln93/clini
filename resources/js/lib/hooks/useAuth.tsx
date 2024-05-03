@@ -10,7 +10,7 @@ export function useAuth() {
         isError,
     } = useQuery({
         queryKey: ["auth"],
-        queryFn: () => checkAuth(auth),
+        queryFn: () => checkAuth(auth!),
         enabled: !!auth,
     });
 

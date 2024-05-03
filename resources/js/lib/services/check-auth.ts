@@ -1,10 +1,10 @@
-import { type TokenAtom, type AuthenticatedUser } from "@/types/auth";
+import { type Token, type AuthenticatedUser } from "@/types/auth";
 import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export async function checkAuth(token: TokenAtom) {
-    if (!token) return null;
+export async function checkAuth(token: Token) {
+    if (!token) throw new Error();
 
     const Authorization = { Authorization: `Bearer ${token}` };
 
@@ -12,6 +12,5 @@ export async function checkAuth(token: TokenAtom) {
         `${API_URL}/check-auth`,
         { headers: Authorization }
     );
-
     return response.data;
 }

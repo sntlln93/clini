@@ -2,11 +2,14 @@ import { Appointment } from "@/types/entities";
 import { Month } from "./types";
 import axios from "axios";
 import { parse, parseISO } from "date-fns";
+import { Token } from "@/types/auth";
 
 export const getAppointments = async (
     month: Month,
-    token: string
+    token: Token
 ): Promise<Appointment[]> => {
+    if (!token) throw new Error();
+
     const response = await axios.get<AppointmentResponse>(
         `${import.meta.env.VITE_API_URL}/appointments?month=${month}`,
         {

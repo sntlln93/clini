@@ -1,4 +1,4 @@
-import { type TokenAtom, type AuthenticatedUser } from "@/types/auth";
+import { type Token, type AuthenticatedUser } from "@/types/auth";
 import axios from "axios";
 import { type UserCredentials } from "./auth.schema";
 
@@ -13,7 +13,7 @@ export const login = async (
 };
 
 export const logout = async ({ token }: LogoutArgs): Promise<void> => {
-    if (!token) return;
+    if (!token) throw new Error();
 
     await axios.delete(`${API_URL}/logout`, {
         headers: {
@@ -22,4 +22,4 @@ export const logout = async ({ token }: LogoutArgs): Promise<void> => {
     });
 };
 
-type LogoutArgs = { token: TokenAtom };
+type LogoutArgs = { token: Token };

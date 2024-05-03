@@ -26,7 +26,7 @@ export function useLogoutAction() {
             navigate("/login");
         },
 
-        mutationFn: () => logout({ token: auth }),
+        mutationFn: () => logout({ token: auth! }),
     });
 
     return {

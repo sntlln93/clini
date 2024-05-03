@@ -14,10 +14,11 @@ export function useAppointments() {
     const [date, setDate] = useState<Date | undefined>(new Date());
     const [month, setMonth] = useState<Date>(new Date());
 
-    const { data, isPending } = useQuery({
+    const { data, isPending, isError } = useQuery({
         queryKey: ["appointments", format(month, "LLL").toLowerCase()],
         queryFn: ({ queryKey: [, month] }) =>
             getAppointments(month as Month, token!),
+        enabled: !!token,
     });
 
     return {
