@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronRight, Users, Home } from "lucide-react";
+import { ChevronRight, Users, Home, Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Nav } from "./Nav";
@@ -47,5 +47,10 @@ const links: NavLink[] = [
         title: "Pacientes",
         icon: Users,
         href: "/patients",
+    },
+    {
+        title: "Turnos",
+        icon: Calendar,
+        href: "/appointments",
     },
 ];

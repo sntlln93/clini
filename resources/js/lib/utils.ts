@@ -15,3 +15,12 @@ export const queryToString = (queryString: Record<string, number | string>) => {
             return acc;
         }, "");
 };
+
+export function toTitleCase(str: string) {
+    return str
+        .split(" ")
+        .map(function (word) {
+            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        })
+        .join(" ");
+}

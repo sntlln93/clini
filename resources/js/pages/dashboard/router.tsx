@@ -3,6 +3,7 @@ import { RouteObject } from "react-router-dom";
 import { DashboardLayout } from "./layout";
 import { WelcomePage } from "./welcome";
 import { PatientsPage } from "./patients";
+import { AppointmentsPage } from "./appointments";
 
 export const dashboardRouter: RouteObject[] = [
     {
@@ -22,6 +23,11 @@ export const dashboardRouter: RouteObject[] = [
                 path: "/patients",
                 handle: { crumb: () => "Pacientes" },
                 element: <PatientsPage />,
+            },
+            {
+                path: "/appointments",
+                handle: { crumb: () => "Turnos" },
+                element: <AppointmentsPage />,
             },
         ],
     },
