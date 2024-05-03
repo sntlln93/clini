@@ -13,6 +13,7 @@ class Appointment extends Model
         'date',
         'time',
         'type',
+        'status',
         'patient_id',
         'user_id',
         'phone',

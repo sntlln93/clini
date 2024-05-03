@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\AppointmentStatus;
 use App\Enums\AppointmentType;
 use App\Models\Appointment;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -27,11 +28,13 @@ class AppointmentFactory extends Factory
     public function definition(): array
     {
         $type = Arr::random(Arr::map(AppointmentType::cases(), fn ($case) => $case->name));
+        $status = Arr::random(Arr::map(AppointmentStatus::cases(), fn ($case) => $case->name));
 
         return [
             'date' => fake()->dateTimeBetween(startDate: '-1 month', endDate: '+1 month'),
             'time' => fake()->time(),
             'type' => $type,
+            'status' => $status,
             'patient_id' => 1,
             'user_id' => 1,
             'phone' => fake()->phoneNumber(),
