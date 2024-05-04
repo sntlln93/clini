@@ -38,6 +38,7 @@
         }
     },
     "scripts": {
+        "fly": "$HOME/.fly/bin/flyctl",
         "lint": "./vendor/bin/phpstan analyse --no-progress",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
