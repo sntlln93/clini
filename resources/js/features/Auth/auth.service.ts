@@ -2,7 +2,7 @@ import { type Token, type AuthenticatedUser } from "@/types/auth";
 import axios from "axios";
 import { type UserCredentials } from "./auth.schema";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = "api";
 
 export const login = async (
     payload: UserCredentials

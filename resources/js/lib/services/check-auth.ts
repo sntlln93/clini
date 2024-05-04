@@ -1,7 +1,7 @@
 import { type Token, type AuthenticatedUser } from "@/types/auth";
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = "api";
 
 export async function checkAuth(token: Token) {
     if (!token) throw new Error();

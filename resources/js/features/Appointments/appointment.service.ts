@@ -4,6 +4,8 @@ import axios from "axios";
 import { parse, parseISO } from "date-fns";
 import { Token } from "@/types/auth";
 
+const API_URL = "api";
+
 export const getAppointments = async (
     month: Month,
     token: Token
@@ -11,7 +13,7 @@ export const getAppointments = async (
     if (!token) throw new Error();
 
     const response = await axios.get<AppointmentResponse>(
-        `${import.meta.env.VITE_API_URL}/appointments?month=${month}`,
+        `${API_URL}/appointments?month=${month}`,
         {
             headers: { Authorization: `Bearer ${token}` },
         }

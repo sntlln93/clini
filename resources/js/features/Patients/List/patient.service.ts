@@ -4,6 +4,8 @@ import { type PaginatedRequest, type PaginationQueryString } from "@/types/api";
 import { type Patient } from "@/types/entities";
 import { Token } from "@/types/auth";
 
+const API_URL = "api";
+
 export const getPatients = async (
     token: Token,
     queryString: PaginationQueryString
@@ -13,7 +15,7 @@ export const getPatients = async (
     const qs = queryToString(queryString);
 
     const response = await axios.get<PaginatedRequest<Patient>>(
-        `${import.meta.env.VITE_API_URL}/patients?${qs}`,
+        `${API_URL}/patients?${qs}`,
         { headers: { Authorization: `Bearer ${token}` } }
     );
     return response.data;
