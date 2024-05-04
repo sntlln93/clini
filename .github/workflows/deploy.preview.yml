@@ -1,12 +1,29 @@
 name: Fly Deploy
-on: [push]
+on: [workflow_dispatch]
 env:
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
 jobs:
-  deploy:
-    name: Deploy app
+  lint:
+    name: Lint code
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2" # Adjust this to your project's PHP version
+          tools: composer:v2
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+      - name: Run lint
+        run: composer lint
+
+  deploy:
+    name: Deploy app
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy
