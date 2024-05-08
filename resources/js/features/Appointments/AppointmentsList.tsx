@@ -4,14 +4,11 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { addMinutes, format, formatDistance } from "date-fns";
-import { enUS, es } from "date-fns/locale";
-import { type Appointment } from "@/types/entities";
+import { es } from "date-fns/locale";
+import type { Appointment } from "@/types/entities";
 import {
-    Ban,
-    CalendarOff,
     CalendarX2,
     CircleCheck,
-    CircleSlash,
     CircleX,
     Clock,
     Home,
@@ -50,13 +47,13 @@ export function AppointmentsList({
                                         variant="h4"
                                         className="font-semibold"
                                     >
-                                        {format(item.time, "HH:ii")} -
+                                        {format(item.time, "HH:mm")} -
                                         {format(
                                             addMinutes(
                                                 item.time,
                                                 item.duration
                                             ),
-                                            "HH:ii"
+                                            "HH:mm"
                                         )}
                                     </Heading>
                                 </div>
@@ -128,18 +125,4 @@ export function AppointmentsList({
             </div>
         </ScrollArea>
     );
-}
-
-function getBadgeVariantFromLabel(
-    label: string
-): ComponentProps<typeof Badge>["variant"] {
-    if (["work"].includes(label.toLowerCase())) {
-        return "default";
-    }
-
-    if (["personal"].includes(label.toLowerCase())) {
-        return "outline";
-    }
-
-    return "secondary";
 }
