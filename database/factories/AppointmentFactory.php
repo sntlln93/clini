@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\AppointmentStatus;
 use App\Enums\AppointmentType;
 use App\Models\Appointment;
+use App\Models\Patient;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
 
@@ -32,10 +33,10 @@ class AppointmentFactory extends Factory
 
         return [
             'date' => fake()->dateTimeBetween(startDate: '-1 month', endDate: '+1 month'),
-            'time' => fake()->time(),
+            'time' => fake()->dateTimeBetween(startDate: '08:00:00', endDate: '18:00:00'),
             'type' => $type,
             'status' => $status,
-            'patient_id' => 1,
+            'patient_id' => Arr::random((Patient::pluck('id')->all())),
             'user_id' => 1,
             'phone' => fake()->phoneNumber(),
             'reason' => fake()->sentence(),
