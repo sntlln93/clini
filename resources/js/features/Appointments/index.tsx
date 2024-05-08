@@ -5,6 +5,7 @@ import { useAppointments } from "./useAppointments";
 export function Appointments() {
     const {
         date,
+        month,
         setMonth,
         setDate,
         daysWithEvents,
@@ -19,6 +20,7 @@ export function Appointments() {
                 <Calendar
                     key={date?.toString()}
                     onMonthChange={setMonth}
+                    month={month}
                     mode="single"
                     selected={date}
                     onSelect={setDate}

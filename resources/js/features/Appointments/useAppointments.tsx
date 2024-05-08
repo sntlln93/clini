@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { format, isSameDay } from "date-fns";
 import { useState } from "react";
 import { getAppointments } from "./appointment.service";
-import { type Month } from "./types";
-import { type Appointment } from "@/types/entities";
+import type { Month } from "./types";
+import type { Appointment } from "@/types/entities";
 import { useStorageState } from "@/lib/hooks/useStorageState";
 
 export function useAppointments() {
@@ -23,6 +23,7 @@ export function useAppointments() {
 
     return {
         appointments: getOnlyFromSelectedDate(data, date),
+        month,
         date,
         daysWithEvents: getDaysWithEvents(data),
         selected,
