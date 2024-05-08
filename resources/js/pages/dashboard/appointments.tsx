@@ -1,4 +1,4 @@
-import { Appointments } from "@/features/Appointments/Appointments";
+import { Appointments } from "@/features/Appointments";
 
 export function AppointmentsPage() {
     return (
