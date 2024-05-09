@@ -11,7 +11,6 @@ export type Appointment = {
     reason?: string;
     notes?: string;
     duration: number;
-    healthcare?: string;
 };
 
 export type Patient = {
@@ -22,4 +21,5 @@ export type Patient = {
     dni: string;
     dateOfBirth: Date;
     sex: "F" | "M" | "U";
+    healthcare?: string;
 };

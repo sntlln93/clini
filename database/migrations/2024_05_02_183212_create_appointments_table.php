@@ -30,7 +30,6 @@ return new class extends Migration
             $table->string('reason')->nullable();
             $table->string('notes')->nullable();
             $table->integer('duration')->default(30);
-            $table->string('healthcare')->nullable();
 
             $table->timestamps();
         });

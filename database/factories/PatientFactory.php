@@ -31,6 +31,7 @@ class PatientFactory extends Factory
             'lastname' => fake()->lastName(),
             'date_of_birth' => fake()->dateTimeBetween(startDate: 90),
             'sex' => Arr::random(['F', 'M', 'U']),
+            'healthcare' => fake()->word(),
         ];
     }
 }

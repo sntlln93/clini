@@ -42,7 +42,6 @@ class AppointmentFactory extends Factory
             'reason' => fake()->sentence(),
             'notes' => fake()->sentence(),
             'duration' => Arr::random([30, 60, 90]),
-            'healthcare' => fake()->word(),
         ];
     }
 }

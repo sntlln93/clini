@@ -15,5 +15,6 @@ class Patient extends Model
         'lastname',
         'date_of_birth',
         'sex',
+        'healthcare',
     ];
 }

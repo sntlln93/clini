@@ -20,7 +20,6 @@ class Appointment extends Model
         'reason',
         'notes',
         'duration',
-        'healthcare',
     ];
 
     /**
