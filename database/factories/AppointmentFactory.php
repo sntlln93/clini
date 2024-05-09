@@ -33,7 +33,7 @@ class AppointmentFactory extends Factory
 
         return [
             'date' => fake()->dateTimeBetween(startDate: '-1 month', endDate: '+1 month'),
-            'time' => fake()->dateTimeBetween(startDate: '08:00:00', endDate: '18:00:00'),
+            'time' => sprintf('%02d:%02d:00', rand(8, 18), Arr::random([0, 15, 30, 45])),
             'type' => $type,
             'status' => $status,
             'patient_id' => Arr::random((Patient::pluck('id')->all())),
