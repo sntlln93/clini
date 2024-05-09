@@ -17,4 +17,12 @@ class Patient extends Model
         'sex',
         'healthcare',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne<Address>
+     */
+    public function address()
+    {
+        return $this->hasOne(Address::class);
+    }
 }

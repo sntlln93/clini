@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('state');
             $table->string('country');
             $table->string('zip_code');
+
+            $table->foreignId('patient_id')->constrained();
+
             $table->timestamps();
         });
     }
