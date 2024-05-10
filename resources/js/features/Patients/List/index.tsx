@@ -7,11 +7,12 @@ import { Button } from "@/components/ui/button";
 import { UserRoundPlus } from "lucide-react";
 import { useSetAtom } from "jotai";
 import { showCreatePatientModalAtom } from "@/stores/ui";
+import useMediaQuery from "@/lib/hooks/useMediaQuery";
 
 export default function PatientList() {
     const { patients, isPending, isError, currentPage, toPage, setFilter, qs } =
         usePatientsList();
-
+    const breakpoint = useMediaQuery();
     const setShowCreatePatient = useSetAtom(showCreatePatientModalAtom);
 
     const openCreatePatient = () => setShowCreatePatient(true);
@@ -23,7 +24,7 @@ export default function PatientList() {
 
     return (
         <div className="flex flex-col gap-5 w-full">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-2">
                 <Input
                     name="search"
                     autoComplete="off"
@@ -32,9 +33,12 @@ export default function PatientList() {
                     onChange={(event) => setFilter(event.target.value)}
                     className="max-w-sm"
                 />
-                <Button onClick={openCreatePatient}>
-                    Nuevo paciente
-                    <UserRoundPlus className="h-4 w-4 ml-2" />
+                <Button
+                    onClick={openCreatePatient}
+                    size={breakpoint === "sm" ? "icon" : "default"}
+                >
+                    <span className="hidden sm:inline">Nuevo paciente</span>
+                    <UserRoundPlus className="h-4 w-4 sm:ml-2" />
                 </Button>
             </div>
             <DataTable columns={columns} data={patients.data} />
