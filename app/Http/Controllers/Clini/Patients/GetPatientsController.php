@@ -7,8 +7,7 @@ use App\Http\Requests\Paginated\PaginatedPatientRequest;
 use App\Http\Resources\PatientCollection;
 use App\Models\Patient;
 use App\Services\FilterPaginatedResultService;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class GetPatientsController extends Controller
 {
@@ -17,8 +16,13 @@ class GetPatientsController extends Controller
         /** @var array<string,string> $validated */
         $validated = $request->validated();
 
-        /** @var Builder<Model> $patient_builder */
-        $patient_builder = Patient::query();
+        /**
+         * In the future this will also return patients created by the practice
+         * and patients whose its clinical history has entries created by the practice
+         */
+        $patient_builder = Patient::whereHas('appointments', function ($query) {
+            $query->where('user_id', Auth::id());
+        });
 
         $patients = (new FilterPaginatedResultService($patient_builder))
             ->setSearchableColumns(['dni', 'lastname', 'names'])

@@ -25,4 +25,12 @@ class Patient extends Model
     {
         return $this->hasOne(Address::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Appointment>
+     */
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
 }
