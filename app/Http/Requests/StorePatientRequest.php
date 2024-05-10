@@ -31,10 +31,22 @@ class StorePatientRequest extends FormRequest
             'patient.sex' => ['required', 'in:F,M,U'],
             'patient.healthcare' => ['sometimes'],
             'address' => ['sometimes'],
-            'address.address_line' => ['present_with:address'],
-            'address.state' => ['present_with:address'],
-            'address.country' => ['present_with:address'],
-            'address.zip_code' => ['present_with:address'],
+            'address.address_line' => ['sometimes'],
+            'address.city' => ['present_with:address'],
+            // 'address.state' => ['present_with:address'],
+            // 'address.country' => ['present_with:address'],
+            // 'address.zip_code' => ['present_with:address'],
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $input = $this->all();
+
+        if (isset($input['address']) && array_filter($input['address']) === []) {
+            unset($input['address']);
+        }
+
+        $this->replace($input);
     }
 }

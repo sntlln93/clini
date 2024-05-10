@@ -12,9 +12,10 @@ class Address extends Model
 
     protected $fillable = [
         'address_line',
-        'state',
-        'country',
-        'zip_code',
+        'city',
+        // 'state',
+        // 'country',
+        // 'zip_code',
         'patient_id',
     ];
 
@@ -28,6 +29,7 @@ class Address extends Model
 
     public function __toString()
     {
-        return Str::title("$this->address_line, $this->state, $this->country. $this->zip_code");
+        // return Str::title("$this->address_line, $this->state, $this->country. $this->zip_code");
+        return Str::title("$this->address_line, $this->city");
     }
 }
