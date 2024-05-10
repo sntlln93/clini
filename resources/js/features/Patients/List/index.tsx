@@ -3,14 +3,18 @@ import { columns } from "./components/Columns";
 import { DataTable, Navigation } from "@/features/Table";
 import { Loader } from "@/components/Loader";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { UserRoundPlus } from "lucide-react";
+import { useSetAtom } from "jotai";
+import { showCreatePatientModalAtom } from "@/stores/ui";
 
 export default function PatientList() {
     const { patients, isPending, isError, currentPage, toPage, setFilter, qs } =
         usePatientsList();
-    const { toast } = useToast();
+
+    const setShowCreatePatient = useSetAtom(showCreatePatientModalAtom);
+
+    const openCreatePatient = () => setShowCreatePatient(true);
 
     if (isPending || !patients) return <Loader />;
     if (isError) {
@@ -26,7 +30,7 @@ export default function PatientList() {
                     onChange={(event) => setFilter(event.target.value)}
                     className="max-w-sm"
                 />
-                <Button>
+                <Button onClick={openCreatePatient}>
                     Nuevo paciente
                     <UserRoundPlus className="h-4 w-4 ml-2" />
                 </Button>

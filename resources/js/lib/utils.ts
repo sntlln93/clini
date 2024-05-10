@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -23,4 +24,15 @@ export function toTitleCase(str: string) {
             return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
         })
         .join(" ");
+}
+
+/**
+ * Returns a valid, non-relative date according to the strtotime PHP function.
+ */
+export function toPhpStrtotimeFormat(date: Date): string {
+    if (!(date instanceof Date)) {
+        throw new Error("Input must be a Date object");
+    }
+
+    return format(date, "yyyy-MM-dd");
 }
