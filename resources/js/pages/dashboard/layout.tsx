@@ -49,12 +49,10 @@ export function DashboardLayout() {
             <div className="h-screen w-full flex">
                 {navToDisplay === "aside" && <Aside />}
                 {navToDisplay === "tabs" && <Tabs />}
-                <div className={`w-full py-5 px-10 ml-[${offset}]`}>
-                    <div className="flex justify-between w-full p-5 mb-5">
-                        <Breadcrumbs />
-
+                <div className={`w-full py-2 px-10 ml-[${offset}]`}>
+                    <div className="flex flex-1">
                         <DropdownMenu>
-                            <DropdownMenuTrigger className="p-1">
+                            <DropdownMenuTrigger className="p-1 ml-auto">
                                 <Avatar>
                                     <AvatarImage src={user?.avatar} />
                                     <AvatarFallback>
@@ -96,6 +94,10 @@ export function DashboardLayout() {
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>
+                    <div className="flex flex-1 py-4">
+                        <Breadcrumbs />
+                    </div>
+
                     <Outlet />
                 </div>
             </div>
