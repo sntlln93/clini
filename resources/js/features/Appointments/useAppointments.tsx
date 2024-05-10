@@ -4,11 +4,10 @@ import { useState } from "react";
 import { getAppointments } from "./appointment.service";
 import type { Month } from "./types";
 import type { Appointment } from "@/types/entities";
-import { useStorageState } from "@/lib/hooks/useStorageState";
+import { useSession } from "@/lib/contexts/auth.context";
 
 export function useAppointments() {
-    const [token] = useStorageState("token");
-
+    const { session } = useSession();
     const [selected, setSelected] = useState<number>();
 
     const [date, setDate] = useState<Date | undefined>(new Date());
@@ -17,8 +16,8 @@ export function useAppointments() {
     const { data, isPending, isError } = useQuery({
         queryKey: ["appointments", format(month, "LLL").toLowerCase()],
         queryFn: ({ queryKey: [, month] }) =>
-            getAppointments(month as Month, token!),
-        enabled: !!token,
+            getAppointments(month as Month, session!),
+        enabled: !!session,
     });
 
     return {

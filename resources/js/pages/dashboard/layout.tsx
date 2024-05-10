@@ -17,13 +17,13 @@ import {
 import { LogOut, UserCircle } from "lucide-react";
 import { useLogoutAction } from "@/lib/hooks/useLogout";
 import { Spinner } from "@/components/Spinner";
-import { useAuth } from "@/lib/hooks/useAuth";
 import { useMemo } from "react";
+import { useSession } from "@/lib/contexts/auth.context";
 
 export function DashboardLayout() {
     const showCreatePatient = useAtomValue(showCreatePatientModalAtom);
     const { attemptLogout, logoutIsPending } = useLogoutAction();
-    const { user } = useAuth();
+    const { user } = useSession();
 
     const avatarFallback = useMemo(
         () =>

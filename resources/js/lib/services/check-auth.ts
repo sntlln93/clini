@@ -3,7 +3,7 @@ import axios from "axios";
 
 const API_URL = "api";
 
-export async function checkAuth(token: Token) {
+export async function checkAuth(token: Token | null) {
     if (!token) throw new Error();
 
     const Authorization = { Authorization: `Bearer ${token}` };

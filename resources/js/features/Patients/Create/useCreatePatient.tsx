@@ -12,9 +12,9 @@ import { useToast } from "@/components/ui/use-toast";
 import { ApiValidationError } from "@/types/api";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { useStorageState } from "@/lib/hooks/useStorageState";
 import { toPhpStrtotimeFormat } from "@/lib/utils";
 import { Patient } from "@/types/entities";
+import { useSession } from "@/lib/contexts/auth.context";
 
 const API_URL = "api";
 
@@ -47,7 +47,7 @@ const createPatient = async ({
 };
 
 export function useCreatePatientAction() {
-    const [auth] = useStorageState("token");
+    const { session } = useSession();
     const setShowCreatePatient = useSetAtom(showCreatePatientModalAtom);
 
     const { toast } = useToast();
@@ -68,7 +68,7 @@ export function useCreatePatientAction() {
             setShowCreatePatient(false);
         },
         mutationFn: (variables: CreatePatientFormValues) =>
-            createPatient({ payload: variables, token: auth! }),
+            createPatient({ payload: variables, token: session! }),
     });
 
     return {

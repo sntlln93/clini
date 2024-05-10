@@ -3,11 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import { getPatients } from "./patient.service";
 import { queryToString } from "@/lib/utils";
 import { useDebounce } from "@uidotdev/usehooks";
-import { useStorageState } from "@/lib/hooks/useStorageState";
+import { useSession } from "@/lib/contexts/auth.context";
 
 export function usePatientsList() {
     const navigate = useNavigate();
-    const [token] = useStorageState("token");
+    const { session } = useSession();
 
     let [searchParams, setSearchParams] = useSearchParams({
         page: "1",
@@ -33,8 +33,7 @@ export function usePatientsList() {
         isError,
     } = useQuery({
         queryKey: ["patients", debouncedQueryString],
-        queryFn: () => getPatients(token!, qs),
-        enabled: !!token,
+        queryFn: () => getPatients(session!, qs),
     });
 
     const toPage = (page: number) => {

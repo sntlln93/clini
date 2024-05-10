@@ -7,14 +7,15 @@ import { useForm } from "react-hook-form";
 import { type UserCredentials, loginSchema } from "../auth.schema";
 import { login } from "../auth.service";
 import { usePreservedRedirect } from "@/lib/hooks/usePreservedRedirect";
-import { useStorageState } from "@/lib/hooks/useStorageState";
+import { useSession } from "@/lib/contexts/auth.context";
 
 export function useLoginAction() {
     const { toast } = useToast();
     const navigate = useNavigate();
     const redirectPath = usePreservedRedirect();
 
-    const [, setAuth] = useStorageState("token");
+    const { setSession } = useSession();
+
     const { mutate: attemptLogin, isPending: loginIsPending } = useMutation({
         onError: ({ response }: ApiValidationError) =>
             toast({
@@ -23,7 +24,7 @@ export function useLoginAction() {
                 variant: "destructive",
             }),
         onSuccess: (data) => {
-            setAuth(data.token);
+            setSession(data.token);
             navigate(redirectPath);
         },
         mutationFn: login,

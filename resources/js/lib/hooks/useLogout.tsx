@@ -2,13 +2,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logout } from "../../features/Auth/auth.service";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
-import { useStorageState } from "@/lib/hooks/useStorageState";
+import { useSession } from "../contexts/auth.context";
 
 export function useLogoutAction() {
     const { toast } = useToast();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    const [auth, setAuth] = useStorageState("token");
+    const { session, setSession } = useSession();
 
     const { mutate: attemptLogout, isPending: logoutIsPending } = useMutation({
         onError: () =>
@@ -18,7 +18,7 @@ export function useLogoutAction() {
                 variant: "destructive",
             }),
         onSuccess: () => {
-            setAuth(null);
+            setSession(null);
             queryClient.invalidateQueries({ queryKey: ["auth"] });
             toast({
                 title: "👋 Adiós",
@@ -27,7 +27,7 @@ export function useLogoutAction() {
             navigate("/login");
         },
 
-        mutationFn: () => logout({ token: auth! }),
+        mutationFn: () => logout({ token: session! }),
     });
 
     return {
