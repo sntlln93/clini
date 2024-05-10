@@ -39,6 +39,7 @@
     },
     "scripts": {
         "fly": "$HOME/.fly/bin/flyctl",
+        "fly:migrate:fresh": "$HOME/.fly/bin/flyctl ssh console -C 'php /var/www/html/artisan migrate:fresh --seed --force'",
         "lint": "./vendor/bin/phpstan analyse --no-progress",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
