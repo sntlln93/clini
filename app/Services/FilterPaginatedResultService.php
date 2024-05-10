@@ -3,9 +3,11 @@
 namespace App\Services;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+/**
+ * @template T of \Illuminate\Database\Eloquent\Model
+ */
 class FilterPaginatedResultService
 {
     /**
@@ -14,7 +16,7 @@ class FilterPaginatedResultService
     private array $searchable_columns;
 
     /**
-     * @param  Builder<Model>  $builder
+     * @param  \Illuminate\Database\Eloquent\Builder<T>  $builder
      */
     public function __construct(private Builder $builder)
     {
@@ -22,6 +24,7 @@ class FilterPaginatedResultService
 
     /**
      * @param  array<string>  $searchable_columns
+     * @return FilterPaginatedResultService<T>
      */
     public function setSearchableColumns(array $searchable_columns): FilterPaginatedResultService
     {
@@ -32,12 +35,12 @@ class FilterPaginatedResultService
 
     /**
      * @param  array<string,string>  $filters
-     * @return LengthAwarePaginator<\Illuminate\Database\Eloquent\Model>
+     * @return LengthAwarePaginator<T>
      */
     public function apply(array $filters): LengthAwarePaginator
     {
         if (array_key_exists('filter', $filters) && isset($this->searchable_columns)) {
-            $this->builder = $this->builder->where(function ($q) use ($filters) {
+            $this->builder->where(function ($q) use ($filters) {
                 foreach ($this->searchable_columns as $column) {
                     $q->orWhere($column, 'LIKE', '%'.$filters['filter'].'%');
                 }
@@ -47,7 +50,7 @@ class FilterPaginatedResultService
         }
 
         if (array_key_exists('sort_column', $filters) && array_key_exists('sort_order', $filters)) {
-            $this->builder = $this->builder->orderBy($filters['sort_column'], $filters['sort_order']);
+            $this->builder->orderBy($filters['sort_column'], $filters['sort_order']);
         }
 
         $per_page = array_key_exists('per_page', $filters)
