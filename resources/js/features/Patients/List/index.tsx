@@ -25,6 +25,8 @@ export default function PatientList() {
         <div className="flex flex-col gap-5 w-full">
             <div className="flex items-center justify-between">
                 <Input
+                    name="search"
+                    autoComplete="off"
                     placeholder="Filtra por dni, nombre o apellido"
                     defaultValue={qs.filter}
                     onChange={(event) => setFilter(event.target.value)}
