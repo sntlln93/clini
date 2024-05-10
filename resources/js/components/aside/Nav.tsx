@@ -6,7 +6,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "react-router-dom";
 import { buttonVariants } from "@/components/ui/button";
-import { NavProps } from "./types";
+import { NavProps } from "@/components/navigation-links";
 
 export function Nav({ links, isCollapsed }: NavProps) {
     const { pathname } = useLocation();

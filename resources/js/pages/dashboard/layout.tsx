@@ -1,7 +1,10 @@
-import SideNavbar from "@/components/SideNavbar";
+import Aside from "@/components/aside";
 import { Breadcrumbs } from "@/features/Breadcrumbs";
 import { CreatePatientModal } from "@/features/Patients/Create";
-import { showCreatePatientModalAtom } from "@/stores/ui";
+import {
+    dashboardContentLeftOffset,
+    showCreatePatientModalAtom,
+} from "@/stores/ui";
 import { useAtomValue } from "jotai";
 import { Outlet } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -19,9 +22,15 @@ import { useLogoutAction } from "@/lib/hooks/useLogout";
 import { Spinner } from "@/components/Spinner";
 import { useMemo } from "react";
 import { useSession } from "@/lib/contexts/auth.context";
+import { usePickNav } from "@/lib/hooks/usePickNav";
+import { Tabs } from "@/components/tabs";
 
 export function DashboardLayout() {
     const showCreatePatient = useAtomValue(showCreatePatientModalAtom);
+
+    const offset = useAtomValue(dashboardContentLeftOffset);
+    const navToDisplay = usePickNav();
+
     const { attemptLogout, logoutIsPending } = useLogoutAction();
     const { user } = useSession();
 
@@ -38,8 +47,9 @@ export function DashboardLayout() {
     return (
         <>
             <div className="h-screen w-full flex">
-                <SideNavbar />
-                <div className="w-full py-5 px-10">
+                {navToDisplay === "aside" && <Aside />}
+                {navToDisplay === "tabs" && <Tabs />}
+                <div className={`w-full py-5 px-10 ml-[${offset}]`}>
                     <div className="flex justify-between w-full p-5 mb-5">
                         <Breadcrumbs />
 
