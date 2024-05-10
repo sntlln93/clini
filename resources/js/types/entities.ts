@@ -22,4 +22,5 @@ export type Patient = {
     dateOfBirth: Date;
     sex: "F" | "M" | "U";
     healthcare?: string;
+    address?: string;
 };
