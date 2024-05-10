@@ -19,7 +19,7 @@ export function Breadcrumbs() {
         }));
 
     return (
-        <Breadcrumb className="mt-5 mb-10">
+        <Breadcrumb>
             <BreadcrumbList>
                 {crumbs.map((crumb, index) => {
                     if (index === crumbs.length - 1) {

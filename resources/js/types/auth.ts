@@ -1,10 +1,10 @@
 export type AuthenticatedUser = {
     token: string;
-    user: User;
-};
+} & User;
 
 export type User = {
     id: number;
+    avatar: string;
     username: string;
     name: string;
     created_at: Date;

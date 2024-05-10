@@ -27,7 +27,7 @@ class LoginController extends Controller
 
         return response([
             'token' => $token,
-            'user' => $user,
+            ...$user->toArray(),
         ], Response::HTTP_OK);
     }
 }

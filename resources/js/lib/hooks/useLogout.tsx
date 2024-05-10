@@ -1,5 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
-import { logout } from "../auth.service";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { logout } from "../../features/Auth/auth.service";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
 import { useStorageState } from "@/lib/hooks/useStorageState";
@@ -7,7 +7,7 @@ import { useStorageState } from "@/lib/hooks/useStorageState";
 export function useLogoutAction() {
     const { toast } = useToast();
     const navigate = useNavigate();
-
+    const queryClient = useQueryClient();
     const [auth, setAuth] = useStorageState("token");
 
     const { mutate: attemptLogout, isPending: logoutIsPending } = useMutation({
@@ -18,9 +18,10 @@ export function useLogoutAction() {
                 variant: "destructive",
             }),
         onSuccess: () => {
-            setAuth("");
+            setAuth(null);
+            queryClient.invalidateQueries({ queryKey: ["auth"] });
             toast({
-                title: "Adiós",
+                title: "👋 Adiós",
                 variant: "default",
             });
             navigate("/login");
