@@ -46,9 +46,8 @@ export function DashboardLayout() {
 
     return (
         <>
-            <div className="h-screen w-full flex">
+            <div className="w-full flex">
                 {navToDisplay === "aside" && <Aside />}
-                {navToDisplay === "tabs" && <Tabs />}
                 <div className={`w-full py-2 px-10 ml-[${offset}]`}>
                     <div className="flex flex-1">
                         <DropdownMenu>
@@ -98,9 +97,12 @@ export function DashboardLayout() {
                         <Breadcrumbs />
                     </div>
 
-                    <Outlet />
+                    <div className="h-full">
+                        <Outlet />
+                    </div>
                 </div>
             </div>
+            {navToDisplay === "tabs" && <Tabs />}
 
             {showCreatePatient && <CreatePatientModal />}
         </>
