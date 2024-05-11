@@ -1,8 +1,11 @@
 import { Calendar } from "@/components/ui/calendar";
 import { AppointmentsList } from "./AppointmentsList";
 import { useAppointments } from "./useAppointments";
+import useMediaQuery from "@/lib/hooks/useMediaQuery";
 
 export function Appointments() {
+    const breakpoint = useMediaQuery();
+
     const {
         date,
         month,
@@ -15,7 +18,7 @@ export function Appointments() {
     } = useAppointments();
 
     return (
-        <div className="flex flex-row gap-10">
+        <div className={`flex ${breakpoint === "sm" && "flex-col"} gap-10`}>
             <div className="flex flex-col">
                 <Calendar
                     key={date?.toString()}
@@ -30,6 +33,7 @@ export function Appointments() {
             </div>
             <div className="flex flex-col w-full">
                 <AppointmentsList
+                    selectedDate={date}
                     items={appointments}
                     selected={selected}
                     setSelected={setSelected}

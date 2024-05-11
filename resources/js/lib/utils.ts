@@ -40,7 +40,7 @@ export function toPhpStrtotimeFormat(date: Date): string {
 
 export function getBreakPoint(): BreakPoint {
     const width = window.innerWidth;
-    console.log(width);
+
     if (width >= 1536) {
         return "2xl";
     } else if (width >= 1280) {
