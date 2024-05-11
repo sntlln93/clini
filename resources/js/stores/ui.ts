@@ -1,7 +1,11 @@
+import { Appointment } from "@/types/entities";
 import { atom } from "jotai";
 
+/** Modals */
 export const showCreatePatientModalAtom = atom(false);
+export const openAppointmentAtom = atom<Appointment | null>(null);
 
+/** Dashboard Layout */
 export const sideNavbarIsCollapsedAtom = atom<boolean>(false);
 export const sideNavbarMinWidthAtom = atom((get) => {
     const isCollapsed = get(sideNavbarIsCollapsedAtom);
