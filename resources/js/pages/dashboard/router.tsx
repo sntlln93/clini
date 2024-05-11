@@ -1,9 +1,10 @@
-import { Protected } from "@/components/AuthRoute";
+import { Protected, RequiresAuthorization } from "@/components/AuthRoute";
 import { RouteObject } from "react-router-dom";
 import { DashboardLayout } from "./layout";
 import { WelcomePage } from "./welcome";
 import { PatientsPage } from "./patients";
 import { AppointmentsPage } from "./appointments";
+import { Settings } from "./settings";
 
 export const dashboardRouter: RouteObject[] = [
     {
@@ -28,6 +29,16 @@ export const dashboardRouter: RouteObject[] = [
                 path: "/appointments",
                 handle: { crumb: () => "Turnos" },
                 element: <AppointmentsPage />,
+            },
+            {
+                element: <RequiresAuthorization allowed={["admin"]} />,
+                children: [
+                    {
+                        element: <Settings />,
+                        path: "/settings",
+                        handle: { crumb: () => "Configuración" },
+                    },
+                ],
             },
         ],
     },
