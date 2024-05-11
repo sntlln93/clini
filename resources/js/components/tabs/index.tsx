@@ -6,7 +6,7 @@ export function Tabs() {
     const { pathname } = useLocation();
 
     return (
-        <nav className="bg-primary-foreground fixed bottom-0 flex w-full justify-between z-50 shadow-inner rounded-t-lg">
+        <nav className="bg-primary-foreground fixed bottom-0 flex w-full justify-between z-50 shadow-inner rounded-t-3xl">
             {links.map((link, index) => (
                 <Link
                     key={link.href}
