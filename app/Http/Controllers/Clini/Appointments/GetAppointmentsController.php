@@ -19,6 +19,7 @@ class GetAppointmentsController extends Controller
         $appointments = Appointment::query()
             ->where('user_id', $practice->id)
             ->whereMonth('date', $validated['month'])
+            ->orderBy('time')
             ->get();
 
         return AppointmentResource::collection($appointments);
