@@ -6,16 +6,8 @@ import useMediaQuery from "@/lib/hooks/useMediaQuery";
 export function Appointments() {
     const breakpoint = useMediaQuery();
 
-    const {
-        date,
-        month,
-        setMonth,
-        setDate,
-        daysWithEvents,
-        appointments,
-        selected,
-        setSelected,
-    } = useAppointments();
+    const { date, month, setMonth, setDate, daysWithEvents, appointments } =
+        useAppointments();
 
     return (
         <div className={`flex ${breakpoint === "sm" && "flex-col"} gap-10`}>
@@ -32,12 +24,7 @@ export function Appointments() {
                 />
             </div>
             <div className="flex flex-col w-full">
-                <AppointmentsList
-                    selectedDate={date}
-                    items={appointments}
-                    selected={selected}
-                    setSelected={setSelected}
-                />
+                <AppointmentsList selectedDate={date} items={appointments} />
             </div>
         </div>
     );

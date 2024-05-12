@@ -8,7 +8,6 @@ import { useSession } from "@/lib/contexts/auth.context";
 
 export function useAppointments() {
     const { session } = useSession();
-    const [selected, setSelected] = useState<number>();
 
     const [date, setDate] = useState<Date | undefined>(new Date());
     const [month, setMonth] = useState<Date>(new Date());
@@ -25,10 +24,8 @@ export function useAppointments() {
         month,
         date,
         daysWithEvents: getDaysWithEvents(data),
-        selected,
         setDate,
         setMonth,
-        setSelected,
     };
 }
 

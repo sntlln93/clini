@@ -1,34 +1,25 @@
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { addMinutes, format, formatDate, formatDistance } from "date-fns";
+import { addMinutes, format, formatDate } from "date-fns";
 import { es } from "date-fns/locale";
 import type { Appointment } from "@/types/entities";
-import {
-    CalendarX2,
-    CircleCheck,
-    CircleX,
-    Clock,
-    Home,
-    Hospital,
-} from "lucide-react";
-import { AppointmentStatus, AppointmentType } from "@/types/enums/entities";
+import { Home, Hospital } from "lucide-react";
+import { AppointmentType } from "@/types/enums/entities";
 import { Heading } from "@/components/ui/typography";
 import { buttonVariants } from "@/components/ui/button";
+import { useSetAtom } from "jotai";
+import { openAppointmentAtom } from "@/stores/ui";
+import { AppointmentStatus } from "./components/AppointmentStatus";
 
 interface AppointmentsProps {
     items: Appointment[];
     selectedDate?: Date;
-    selected?: number;
-    setSelected: (id: number) => void;
 }
 
-export function AppointmentsList({
-    items,
-    selected,
-    selectedDate,
-    setSelected,
-}: AppointmentsProps) {
+export function AppointmentsList({ items, selectedDate }: AppointmentsProps) {
+    const setOpenAppointment = useSetAtom(openAppointmentAtom);
+
     if (!selectedDate) {
         return <EmptySelection />;
     }
@@ -43,52 +34,16 @@ export function AppointmentsList({
                 {items.map((item) => (
                     <button
                         key={item.id}
-                        className={cn(
-                            "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
-                            selected === item.id && "bg-muted"
-                        )}
-                        onClick={() => setSelected(item.id)}
+                        className="flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent"
+                        onClick={() => setOpenAppointment(item)}
                     >
                         <div className="flex w-full flex-col gap-1">
                             <div className="flex flex-col">
-                                <div className="ml-auto text-muted-foreground">
-                                    {item.status ==
-                                        AppointmentStatus.Pending && (
-                                        <span>
-                                            {formatDistance(
-                                                item.time,
-                                                new Date(),
-                                                {
-                                                    addSuffix: true,
-                                                    locale: es,
-                                                }
-                                            )}
-                                            <Clock className="h-6 w-6 ml-1 stroke-amber-500 inline" />
-                                        </span>
-                                    )}
-
-                                    {item.status == AppointmentStatus.Done && (
-                                        <span>
-                                            Completado
-                                            <CircleCheck className="h-6 w-6 ml-1 stroke-green-500 inline" />
-                                        </span>
-                                    )}
-
-                                    {item.status ==
-                                        AppointmentStatus.Canceled && (
-                                        <span>
-                                            Cancelado
-                                            <CalendarX2 className="h-6 w-6 ml-1 stroke-red-500 inline" />
-                                        </span>
-                                    )}
-                                    {item.status ==
-                                        AppointmentStatus.Missed && (
-                                        <span>
-                                            No asistió
-                                            <CircleX className="h-6 w-6 ml-1 stroke-red-500 inline" />
-                                        </span>
-                                    )}
-                                </div>
+                                <AppointmentStatus
+                                    status={item.status}
+                                    time={item.time}
+                                    className="ml-auto text-muted-foreground"
+                                />
                                 <div className="flex items-center gap-2">
                                     <Heading
                                         variant="h4"
