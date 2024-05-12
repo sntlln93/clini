@@ -1,6 +1,6 @@
 import { useSession } from "@/lib/contexts/auth.context";
-import { getClosestAppointment } from "../Appointments/appointment.service";
 import { useQuery } from "@tanstack/react-query";
+import { getClosestAppointment } from "../appointment.service";
 
 export function useClosestAppointment() {
     const { session } = useSession();

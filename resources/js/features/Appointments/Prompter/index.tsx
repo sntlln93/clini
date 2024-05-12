@@ -8,7 +8,7 @@ import { Spinner } from "@/components/Spinner";
 import { useSetAtom } from "jotai";
 import { openAppointmentAtom } from "@/stores/ui";
 
-export function AppointmentPrompter() {
+export function Prompter() {
     const [prefersReduceMotion, setPrefersReduceMotion] = useState(true);
     const { appointment, isPending } = useClosestAppointment();
     const setOpenAppointment = useSetAtom(openAppointmentAtom);

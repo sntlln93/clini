@@ -1,9 +1,9 @@
-import { Appointments } from "@/features/Appointments";
+import { AppointmentsList } from "@/features/Appointments/List";
 
 export function AppointmentsPage() {
     return (
         <div className="w-full">
-            <Appointments />
+            <AppointmentsList />
         </div>
     );
 }

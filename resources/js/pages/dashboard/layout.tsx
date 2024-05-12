@@ -25,7 +25,7 @@ import { useMemo } from "react";
 import { useSession } from "@/lib/contexts/auth.context";
 import { usePickNav } from "@/lib/hooks/usePickNav";
 import { Tabs } from "@/components/tabs";
-import { AppointmentPrompter } from "@/features/AppointmentPrompter";
+import { Prompter } from "@/features/Appointments/Prompter";
 import { AppointmentModal } from "@/features/Appointments/AppointmentModal";
 
 export function DashboardLayout() {
@@ -54,7 +54,7 @@ export function DashboardLayout() {
                 {navToDisplay === "aside" && <Aside />}
                 <div className={`w-full py-2 px-10 ml-[${offset}]`}>
                     <div className="flex flex-1 items-center">
-                        <AppointmentPrompter />
+                        <Prompter />
                         <DropdownMenu>
                             <DropdownMenuTrigger className="p-1 ml-auto">
                                 <Avatar>
