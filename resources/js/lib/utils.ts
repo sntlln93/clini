@@ -53,3 +53,15 @@ export function getBreakPoint(): BreakPoint {
         return "sm";
     }
 }
+
+export function mergeDateAndTime(date: Date, time: Date) {
+    return new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        time.getHours(),
+        time.getMinutes(),
+        time.getSeconds(),
+        time.getMilliseconds()
+    );
+}

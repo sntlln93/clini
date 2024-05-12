@@ -1,16 +1,14 @@
 import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { addMinutes, format, formatDate } from "date-fns";
 import { es } from "date-fns/locale";
 import type { Appointment } from "@/types/entities";
-import { Home, Hospital } from "lucide-react";
-import { AppointmentType } from "@/types/enums/entities";
 import { Heading } from "@/components/ui/typography";
 import { buttonVariants } from "@/components/ui/button";
 import { useSetAtom } from "jotai";
 import { openAppointmentAtom } from "@/stores/ui";
 import { AppointmentStatus } from "./components/AppointmentStatus";
+import { AppointmentType } from "./components/AppointmentType";
 
 interface AppointmentsProps {
     items: Appointment[];
@@ -40,6 +38,7 @@ export function AppointmentsList({ items, selectedDate }: AppointmentsProps) {
                         <div className="flex w-full flex-col gap-1">
                             <div className="flex flex-col">
                                 <AppointmentStatus
+                                    date={item.date}
                                     status={item.status}
                                     time={item.time}
                                     className="ml-auto text-muted-foreground"
@@ -70,19 +69,7 @@ export function AppointmentsList({ items, selectedDate }: AppointmentsProps) {
                             </div>
                         )}
                         <div className="flex items-center gap-2">
-                            {item.type === AppointmentType.Practice && (
-                                <Badge className="bg-primary/70 py-1">
-                                    <Hospital className="h-5 w-5 mr-2" />
-                                    <span className="mr-2">Consultorio</span>
-                                </Badge>
-                            )}
-
-                            {item.type === AppointmentType.Visit && (
-                                <Badge className="bg-primary/70 py-1">
-                                    <Home className="h-5 w-5 mr-2" />
-                                    <span className="mr-2">Domicilio</span>
-                                </Badge>
-                            )}
+                            <AppointmentType appointmentType={item.type} />
                         </div>
                     </button>
                 ))}
