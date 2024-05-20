@@ -1,5 +1,3 @@
-import { usePatientsList } from "./usePatientList";
-import { columns } from "./components/Columns";
 import { DataTable, Navigation } from "@/features/Table";
 import { Loader } from "@/components/Loader";
 import { Input } from "@/components/ui/input";
@@ -8,8 +6,10 @@ import { UserRoundPlus } from "lucide-react";
 import { useSetAtom } from "jotai";
 import { showCreatePatientModalAtom } from "@/stores/ui";
 import useMediaQuery from "@/lib/hooks/useMediaQuery";
+import { usePatientsList } from "./usePatientList";
+import { columns } from "./components/Columns";
 
-export default function PatientList() {
+export function PatientsPage() {
     const { patients, isPending, isError, currentPage, toPage, setFilter, qs } =
         usePatientsList();
     const breakpoint = useMediaQuery();
