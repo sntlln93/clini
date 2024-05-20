@@ -31,6 +31,5 @@ class StorePatientController extends Controller
         });
 
         return new PatientResource($patient);
-
     }
 }
