@@ -37,7 +37,10 @@ export function AppointmentsList() {
                             <SelectionWithNoAppointments selectedDate={date} />
                         ) : (
                             appointments.map((appointment) => (
-                                <AppointmentCard appointment={appointment} />
+                                <AppointmentCard
+                                    appointment={appointment}
+                                    key={appointment.id}
+                                />
                             ))
                         )}
                     </div>
