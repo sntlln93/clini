@@ -23,7 +23,7 @@ class PatientResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
-            'dni' => $this->resource->dni,
+            'dni' => number_format(num: (int) $this->resource->dni, thousands_separator: '.'),
             'names' => $this->resource->names,
             'lastname' => $this->resource->lastname,
             'fullName' => $this->resource->lastname.', '.$this->resource->names,
