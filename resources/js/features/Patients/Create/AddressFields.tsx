@@ -6,7 +6,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { OptionalLabel } from "./OptionalLabel";
+import { OptionalLabel } from "@/components/form/optional-label";
 
 export function AddressFields({ form }: any) {
     return (

@@ -14,7 +14,7 @@ import {
     SelectContent,
     SelectItem,
 } from "@/components/ui/select";
-import { OptionalLabel } from "./OptionalLabel";
+import { OptionalLabel } from "@/components/form/optional-label";
 import {
     Popover,
     PopoverContent,
