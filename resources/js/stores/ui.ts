@@ -3,7 +3,12 @@ import { atom } from "jotai";
 
 /** Modals */
 export const showCreatePatientModalAtom = atom(false);
-export const openAppointmentAtom = atom<Appointment | null>(null);
+export const appointmentAtom = atom<Appointment | null>(null);
+export const showAppointmentAtom = atom((get) => {
+    const appointment = get(appointmentAtom);
+
+    return !!appointment;
+});
 
 /** Dashboard Layout */
 export const sideNavbarIsCollapsedAtom = atom<boolean>(false);

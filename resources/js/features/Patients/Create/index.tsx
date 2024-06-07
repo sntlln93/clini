@@ -13,7 +13,7 @@ import {
 } from "./useCreatePatient";
 import { Spinner } from "@/components/Spinner";
 
-export function CreatePatientModal() {
+export function CreatePatientModal({ open }: { open: boolean }) {
     const setShowCreatePatient = useSetAtom(showCreatePatientModalAtom);
     const { form, step, toSecondStep, toFirstStep } = useCreatePatientForm();
     const { mutate, isPending } = useCreatePatientAction();
@@ -27,7 +27,7 @@ export function CreatePatientModal() {
     };
 
     return (
-        <Modal handleClose={closeSelf} title="Nuevo Paciente">
+        <Modal open={open} handleClose={closeSelf} title="Nuevo Paciente">
             <Form {...form}>
                 <form
                     className="grid gap-5"

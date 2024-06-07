@@ -3,7 +3,7 @@ import { Breadcrumbs } from "@/features/Breadcrumbs";
 import { CreatePatientModal } from "@/features/Patients/Create";
 import {
     dashboardContentLeftOffset,
-    openAppointmentAtom,
+    showAppointmentAtom,
     showCreatePatientModalAtom,
 } from "@/stores/ui";
 import { useAtomValue } from "jotai";
@@ -29,9 +29,6 @@ import { Prompter } from "@/features/Appointments/Prompter";
 import { AppointmentModal } from "@/features/Appointments/AppointmentModal";
 
 export function DashboardLayout() {
-    const showCreatePatient = useAtomValue(showCreatePatientModalAtom);
-    const openAppointment = useAtomValue(openAppointmentAtom);
-
     const offset = useAtomValue(dashboardContentLeftOffset);
     const navToDisplay = usePickNav();
 
@@ -109,8 +106,19 @@ export function DashboardLayout() {
             </div>
             {navToDisplay === "tabs" && <Tabs />}
 
-            {showCreatePatient && <CreatePatientModal />}
-            {openAppointment && <AppointmentModal />}
+            <Modals />
+        </>
+    );
+}
+
+function Modals() {
+    const openCreatePatient = useAtomValue(showCreatePatientModalAtom);
+    const openAppointment = useAtomValue(showAppointmentAtom);
+
+    return (
+        <>
+            <CreatePatientModal open={openCreatePatient} />
+            <AppointmentModal open={openAppointment} />
         </>
     );
 }

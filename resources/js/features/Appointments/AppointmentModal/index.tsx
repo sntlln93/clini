@@ -1,4 +1,4 @@
-import { openAppointmentAtom } from "@/stores/ui";
+import { appointmentAtom } from "@/stores/ui";
 import { useAtom } from "jotai";
 import { Button } from "@/components/ui/button";
 import Modal from "@/features/Modal";
@@ -13,20 +13,22 @@ import { WhatsappIcon } from "@/components/icons/WhatsappIcon";
 import { Link } from "react-router-dom";
 import { Pen } from "lucide-react";
 
-export function AppointmentModal() {
-    const [appointment, setAppointment] = useAtom(openAppointmentAtom);
+export function AppointmentModal({ open }: { open: boolean }) {
+    const [appointment, setAppointment] = useAtom(appointmentAtom);
 
     const closeSelf = () => {
         setAppointment(null);
     };
 
+    if (!open) return;
+
     return (
-        <Modal handleClose={closeSelf} closeOnBackDrop={true}>
+        <Modal open={open} handleClose={closeSelf}>
             <main className="grid gap-2 mb-2">
                 <div className="bg-sky-500 gap-5 rounded-xl p-3 text-primary-foreground">
                     <div className="flex justify-end gap-2">
                         <Link
-                            to={`https://wa.me/${appointment!.phone}`}
+                            to={`https://wa.me/${appointment?.phone}`}
                             target="_blank"
                         >
                             <Badge className="bg-primary/70 py-1">
