@@ -137,7 +137,7 @@ function DashboardLayout() {
                         </DropdownMenu>
                     </div>
                     <div className="flex flex-1 py-4">
-                        {/* <Breadcrumbs /> */}
+                        <Breadcrumbs />
                     </div>
 
                     <div className="h-full">

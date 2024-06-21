@@ -1,3 +1,4 @@
+import { links } from "@/components/navigation-links";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -10,13 +11,13 @@ import { Link, useMatches } from "@tanstack/react-router";
 import React from "react";
 
 export function Breadcrumbs() {
-    let matches = useMatches();
-    let crumbs = matches
-        .filter((match) => Boolean(match.handle?.crumb))
-        .map((match) => ({
-            path: match.pathname,
-            label: match.handle.crumb(),
-        }));
+    const matches = useMatches();
+    const pathNames = matches.map((match) => match.pathname);
+    const crumbs = Array.from(new Set(pathNames))
+        .filter((path) => !path.endsWith("/") || path === "/")
+        .map((crumb) => {
+            return links.find((link) => link.href === crumb) ?? links[0];
+        });
 
     return (
         <Breadcrumb>
@@ -25,7 +26,7 @@ export function Breadcrumbs() {
                     if (index === crumbs.length - 1) {
                         return (
                             <BreadcrumbItem key={index}>
-                                <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
+                                <BreadcrumbPage>{crumb.title}</BreadcrumbPage>
                             </BreadcrumbItem>
                         );
                     }
@@ -34,7 +35,7 @@ export function Breadcrumbs() {
                         <React.Fragment key={index}>
                             <BreadcrumbItem>
                                 <BreadcrumbLink asChild>
-                                    <Link to={crumb.path}>{crumb.label}</Link>
+                                    <Link to={crumb.href}>{crumb.title}</Link>
                                 </BreadcrumbLink>
                             </BreadcrumbItem>
                             <BreadcrumbSeparator />
