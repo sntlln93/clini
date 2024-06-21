@@ -71,7 +71,7 @@ function Page() {
                     />
                 </div>
 
-                {true ? (
+                {hasFilters ? (
                     <Link
                         search={{}}
                         className={cn(
@@ -82,7 +82,6 @@ function Page() {
                                         : "default",
                                 variant: "secondary",
                             }),
-                            "mr-auto",
                         )}
                     >
                         <X className="h-4 w-4 sm:mr-2" />
@@ -102,6 +101,7 @@ function Page() {
                                     ? "inputCompanion"
                                     : "default",
                         }),
+                        "ml-auto",
                     )}
                 >
                     <span className="hidden sm:inline">Nuevo paciente</span>
