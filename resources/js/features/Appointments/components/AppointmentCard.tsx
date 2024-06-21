@@ -1,23 +1,27 @@
 import { addMinutes, format } from "date-fns";
 import type { Appointment } from "@/types/entities";
 import { Heading } from "@/components/ui/typography";
-import { useSetAtom } from "jotai";
-import { appointmentAtom } from "@/stores/ui";
 import { AppointmentStatus } from "./AppointmentStatus";
 import { AppointmentType } from "./AppointmentType";
+import { usePreserveSearchNavigation } from "@/lib/hooks/usePreserveSearchNavigation";
 
 interface AppointmentProps {
     appointment: Appointment;
 }
 
 export function AppointmentCard({ appointment }: AppointmentProps) {
-    const setAppointment = useSetAtom(appointmentAtom);
+    const navigate = usePreserveSearchNavigation();
 
     return (
         <button
             key={appointment.id}
             className="flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent"
-            onClick={() => setAppointment(appointment)}
+            onClick={() =>
+                navigate({
+                    modal: "appointment.show",
+                    appointmentId: appointment.id,
+                })
+            }
         >
             <div className="flex w-full flex-col gap-1">
                 <div className="flex flex-col">
@@ -33,9 +37,9 @@ export function AppointmentCard({ appointment }: AppointmentProps) {
                             {format(
                                 addMinutes(
                                     appointment.time,
-                                    appointment.duration
+                                    appointment.duration,
                                 ),
-                                "HH:mm"
+                                "HH:mm",
                             )}
                         </Heading>
                     </div>

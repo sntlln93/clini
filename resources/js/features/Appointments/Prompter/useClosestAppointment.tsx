@@ -1,14 +1,14 @@
-import { useSession } from "@/lib/contexts/auth.context";
 import { useQuery } from "@tanstack/react-query";
-import { getClosestAppointment } from "../appointment.service";
+import { useAuth } from "@/lib/hooks/useAuth";
+import { getClosestAppointment } from "@/lib/services/appointment";
 
 export function useClosestAppointment() {
-    const { session } = useSession();
+    const { user } = useAuth();
 
     const { data: appointment, isPending } = useQuery({
         queryKey: ["appointments", "closest"],
-        queryFn: () => getClosestAppointment(session!),
-        enabled: !!session,
+        queryFn: () => getClosestAppointment(user!.token),
+        enabled: !!user,
     });
 
     return {

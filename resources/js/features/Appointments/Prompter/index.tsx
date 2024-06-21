@@ -5,13 +5,12 @@ import { formatDistance } from "date-fns";
 import { es } from "date-fns/locale";
 import { useClosestAppointment } from "./useClosestAppointment";
 import { Spinner } from "@/components/Spinner";
-import { useSetAtom } from "jotai";
-import { appointmentAtom } from "@/stores/ui";
+import { usePreserveSearchNavigation } from "@/lib/hooks/usePreserveSearchNavigation";
 
 export function Prompter() {
+    const navigate = usePreserveSearchNavigation();
     const [prefersReduceMotion, setPrefersReduceMotion] = useState(true);
     const { appointment, isPending } = useClosestAppointment();
-    const setAppointment = useSetAtom(appointmentAtom);
 
     useEffect(() => {
         if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -45,7 +44,12 @@ export function Prompter() {
     return (
         <button
             className={`px-2 max-w-[400px] bg-amber-500 text-primary-foreground text-sm border rounded-xl flex overflow-hidden`}
-            onClick={() => setAppointment(appointment)}
+            onClick={() =>
+                navigate({
+                    modal: "appointment.show",
+                    appointmentId: appointment.id,
+                })
+            }
         >
             <div
                 className={styles.scroller}

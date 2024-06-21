@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { links } from "@/components/navigation-links";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 
 export function Tabs() {
     const { pathname } = useLocation();
@@ -10,7 +11,7 @@ export function Tabs() {
             {links.map((link, index) => (
                 <Link
                     key={link.href}
-                    to={link.href}
+                    href={link.href}
                     className={cn(
                         "flex flex-col flex-1 gap-1 items-center py-3",
                         pathname === link.href
@@ -19,7 +20,7 @@ export function Tabs() {
                         index + 1 === links.length
                             ? "rounded-tr-3xl"
                             : "rounded-tr-none",
-                        index === 0 ? "rounded-tl-3xl" : "rounded-tl-none"
+                        index === 0 ? "rounded-tl-3xl" : "rounded-tl-none",
                     )}
                 >
                     <link.icon className="h-4 w-4" />

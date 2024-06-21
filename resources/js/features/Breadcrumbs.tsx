@@ -1,4 +1,3 @@
-import { Link, Params, useMatches } from "react-router-dom";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -7,10 +6,11 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Link, useMatches } from "@tanstack/react-router";
 import React from "react";
 
 export function Breadcrumbs() {
-    let matches = useMatches() as IMatches[];
+    let matches = useMatches();
     let crumbs = matches
         .filter((match) => Boolean(match.handle?.crumb))
         .map((match) => ({
@@ -45,12 +45,3 @@ export function Breadcrumbs() {
         </Breadcrumb>
     );
 }
-
-type IMatches = {
-    id: string;
-    pathname: string;
-    params: Params<string>;
-    handle: {
-        crumb: (param?: string) => React.ReactNode;
-    };
-};

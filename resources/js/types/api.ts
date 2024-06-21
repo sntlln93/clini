@@ -1,11 +1,12 @@
 import { AxiosError } from "axios";
+import { Appointment } from "./entities";
 
 export type ApiValidationError = AxiosError<{
     message: string;
     errors: Record<string, string[]>;
 }>;
 
-export type PaginatedRequest<Data> = {
+export type PaginatedResponse<Data> = {
     data: Data[];
     meta: {
         current_page: number;
@@ -23,4 +24,9 @@ export type PaginationQueryString = {
     sort_order?: string;
     filter?: string;
     per_page?: number;
+};
+
+export type AppointmentResponse = Omit<Appointment, "date" | "time"> & {
+    date: string;
+    time: string;
 };

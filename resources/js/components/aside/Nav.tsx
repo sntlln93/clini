@@ -4,9 +4,10 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { Link, useLocation } from "react-router-dom";
 import { buttonVariants } from "@/components/ui/button";
 import { NavProps } from "@/components/navigation-links";
+import { useLocation } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 
 export function Nav({ links, isCollapsed }: NavProps) {
     const { pathname } = useLocation();
@@ -32,7 +33,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
                                             size: "icon",
                                         }),
                                         "h-9 w-9",
-                                        "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white"
+                                        "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white",
                                     )}
                                 >
                                     <link.icon className="h-4 w-4" />
@@ -66,7 +67,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
                                     size: "sm",
                                 }),
                                 "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
-                                "justify-start"
+                                "justify-start",
                             )}
                         >
                             <link.icon className="mr-2 h-4 w-4" />
@@ -75,14 +76,14 @@ export function Nav({ links, isCollapsed }: NavProps) {
                                 <span
                                     className={cn(
                                         "ml-auto",
-                                        "text-background dark:text-white"
+                                        "text-background dark:text-white",
                                     )}
                                 >
                                     {link.label}
                                 </span>
                             )}
                         </Link>
-                    )
+                    ),
                 )}
             </nav>
         </div>
