@@ -14,9 +14,9 @@ import { usePreserveSearchNavigation } from "@/lib/hooks/usePreserveSearchNaviga
 export const Route = createFileRoute("/_dashboard/appointments")({
     component: Page,
     loaderDeps: ({ search }) => search,
-    loader: ({ context: { queryClient, auth }, deps }) => {
+    loader: ({ context: { queryClient }, deps }) => {
         return queryClient.ensureQueryData(
-            appointmentsQueryOptions(auth.user!.token, months[deps.month - 1]),
+            appointmentsQueryOptions(months[deps.month - 1]),
         );
     },
     validateSearch: z.object({

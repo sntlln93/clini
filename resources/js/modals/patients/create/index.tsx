@@ -9,9 +9,9 @@ import {
     useCreatePatientAction,
     useCreatePatientForm,
 } from "@/modals/patients/create/useCreatePatient";
-import { CreatePatientFormValues } from "@/modals/patients/create/schema";
 import { useEffect } from "react";
 import { usePreserveSearchNavigation } from "@/lib/hooks/usePreserveSearchNavigation";
+import { CreatePatientForm } from "./schema";
 
 export default function CreatePatientModal() {
     const navigate = usePreserveSearchNavigation();
@@ -29,7 +29,7 @@ export default function CreatePatientModal() {
         navigate({ modal: undefined });
     };
 
-    const onSubmit = (values: CreatePatientFormValues) => {
+    const onSubmit = (values: CreatePatientForm) => {
         mutate(values);
     };
 

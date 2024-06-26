@@ -62,10 +62,10 @@ export const Route = createFileRoute("/_dashboard")({
         }
     },
     loaderDeps: ({ search }) => search,
-    loader: ({ context: { queryClient, auth }, deps }) => {
+    loader: ({ context: { queryClient }, deps }) => {
         if (deps.appointmentId) {
             return queryClient.ensureQueryData(
-                appointmentQueryOptions(auth.user!.token, deps.appointmentId),
+                appointmentQueryOptions(deps.appointmentId),
             );
         }
     },

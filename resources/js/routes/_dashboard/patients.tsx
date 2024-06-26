@@ -1,5 +1,5 @@
 import { Loader } from "@/components/Loader";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { columns } from "@/features/Patients/columns";
 import { DataTable, Navigation } from "@/features/Table";
@@ -7,24 +7,17 @@ import useMediaQuery from "@/lib/hooks/useMediaQuery";
 import { patientsQueryOptions } from "@/lib/queries/patients.query";
 import { paginationSchema } from "@/lib/schemas/pagination.schema";
 import { cn } from "@/lib/utils";
-import {
-    Link,
-    Outlet,
-    createFileRoute,
-    useNavigate,
-} from "@tanstack/react-router";
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useDebounce } from "@uidotdev/usehooks";
-import { Cross, UserRoundPlus, X } from "lucide-react";
+import { UserRoundPlus, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/_dashboard/patients")({
     pendingComponent: Loader,
     component: Page,
     loaderDeps: ({ search }) => search,
-    loader: ({ context: { queryClient, auth }, deps }) => {
-        return queryClient.ensureQueryData(
-            patientsQueryOptions(auth.user!.token, deps),
-        );
+    loader: ({ context: { queryClient }, deps }) => {
+        return queryClient.ensureQueryData(patientsQueryOptions(deps));
     },
     validateSearch: paginationSchema,
 });
