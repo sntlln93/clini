@@ -13,7 +13,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { ControllerRenderProps, FieldValues } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 import {
     Popover,
     PopoverContent,
@@ -22,26 +22,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { Patient } from "@/types/entities";
 import { useState } from "react";
+import { AppointmentForm } from "@/modals/appointments/create/schema";
+import { searchPatient } from "@/lib/services/patient";
 
 interface SelectPatientProps {
-    field: ControllerRenderProps<FieldValues, "patientId">;
-    form: any;
+    form: UseFormReturn<AppointmentForm>;
 }
 
-const API_URL = "api";
-
-const searchPatient = async (search: string) => {
-    const response = await axios.get<Patient[]>(
-        `${API_URL}/patients/search?filter=${search}`
-    );
-
-    return response.data;
-};
-
-export function SelectPatient({ field, form }: SelectPatientProps) {
+export function SelectPatient({ form }: SelectPatientProps) {
     const [search, setSearch] = useState("");
     const [open, setOpen] = useState(false);
 
@@ -51,13 +40,17 @@ export function SelectPatient({ field, form }: SelectPatientProps) {
         // enabled: search.length > 0
     });
 
-    const name = (value: string) => {
-        const patient = patients?.find((patient) => patient.id === value);
+    const name = (value: number) => {
+        const patient = patients?.find(
+            (patient) => Number(patient.id) === value,
+        );
 
         if (!patient) return null;
 
         return `${patient.fullName} - ${patient.dni}`;
     };
+
+    const fieldValue = form.getValues("patientId");
 
     return (
         <FormItem className="flex flex-col">
@@ -70,12 +63,12 @@ export function SelectPatient({ field, form }: SelectPatientProps) {
                             role="combobox"
                             className={cn(
                                 "w-full justify-between",
-                                !field.value && "text-muted-foreground"
+                                fieldValue && "text-muted-foreground",
                             )}
                         >
                             <span>
-                                {field.value
-                                    ? name(field.value)
+                                {fieldValue
+                                    ? name(fieldValue)
                                     : "Seleccione un paciente"}
                             </span>
                             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -102,7 +95,7 @@ export function SelectPatient({ field, form }: SelectPatientProps) {
                                         onSelect={() => {
                                             form.setValue(
                                                 "patientId",
-                                                patient.id
+                                                Number(patient.id),
                                             );
                                             setOpen(false);
                                         }}
@@ -111,9 +104,10 @@ export function SelectPatient({ field, form }: SelectPatientProps) {
                                         <CheckIcon
                                             className={cn(
                                                 "ml-auto h-4 w-4",
-                                                patient.id === field.value
+                                                Number(patient.id) ===
+                                                    fieldValue
                                                     ? "opacity-100"
-                                                    : "opacity-0"
+                                                    : "opacity-0",
                                             )}
                                         />
                                     </CommandItem>

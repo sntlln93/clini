@@ -21,3 +21,11 @@ export const getPatients = async (
     );
     return response.data;
 };
+
+export const searchPatient = async (search: string) => {
+    const response = await api.get<Patient[]>(
+        `/patients/search?filter=${search}`,
+    );
+
+    return response.data;
+};

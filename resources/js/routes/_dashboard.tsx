@@ -25,10 +25,13 @@ import { z } from "zod";
 import CreatePatientModal from "@/modals/patients/create";
 import { appointmentQueryOptions } from "@/lib/queries/appointments.query";
 import { ShowAppointmentModal } from "@/modals/appointments/show";
+import CreateAppointmentModal from "@/modals/appointments/create";
 
 const searchSchema = z
     .object({
-        modal: z.enum(["patient.create", "appointment.show"]).optional(),
+        modal: z
+            .enum(["patient.create", "appointment.show", "appointment.create"])
+            .optional(),
         appointmentId: z.number().optional(),
     })
     .refine(
@@ -149,6 +152,7 @@ function DashboardLayout() {
 
             {modal === "patient.create" && <CreatePatientModal />}
             {modal === "appointment.show" && <ShowAppointmentModal />}
+            {modal === "appointment.create" && <CreateAppointmentModal />}
         </>
     );
 }

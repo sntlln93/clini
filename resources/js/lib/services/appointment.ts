@@ -4,6 +4,8 @@ import { parse, parseISO } from "date-fns";
 import { Token } from "@/types/auth";
 import { Month } from "@/lib/consts/months";
 import { AppointmentResponse } from "@/types/api";
+import { AppointmentForm } from "@/modals/appointments/create/schema";
+import { toPhpStrtotimeFormat } from "../utils";
 
 const parseAppointment = (appointment: AppointmentResponse) => {
     return {
@@ -50,6 +52,17 @@ export const getClosestAppointment = async (
     );
 
     if (response.status === 204) return null;
+
+    return parseAppointment(response.data);
+};
+
+export const createAppointment = async (
+    payload: AppointmentForm,
+): Promise<Appointment> => {
+    const response = await api.post("/appointments", {
+        ...payload,
+        date: toPhpStrtotimeFormat(payload.date),
+    });
 
     return parseAppointment(response.data);
 };
