@@ -2,50 +2,16 @@ import { SyntheticEvent, useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
-    type CreatePatientFormValues,
+    type CreatePatientForm,
     createPatientInitialValues,
     createPatientSchema,
 } from "./schema";
 import { useToast } from "@/components/ui/use-toast";
 import { ApiValidationError } from "@/types/api";
-import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { toPhpStrtotimeFormat } from "@/lib/utils";
-import { Patient } from "@/types/entities";
-import { useAuth } from "@/lib/hooks/useAuth";
-
-const API_URL = import.meta.env.VITE_API_URL;
-
-type CreatePatientPayload = {
-    payload: CreatePatientFormValues;
-    token: string;
-};
-
-const createPatient = async ({
-    payload,
-    token,
-}: CreatePatientPayload): Promise<Patient> => {
-    const { address_line, city, ...patient } = payload;
-
-    const response = await axios.post(
-        `${API_URL}/patients`,
-        {
-            patient: {
-                ...patient,
-                date_of_birth: toPhpStrtotimeFormat(patient.date_of_birth),
-            },
-            address: { address_line, city },
-        },
-        {
-            headers: { Authorization: `Bearer ${token}` },
-        },
-    );
-
-    return response.data;
-};
+import { createPatient } from "@/lib/services/patient";
 
 export function useCreatePatientAction() {
-    const { user } = useAuth();
     const { toast } = useToast();
 
     const { mutate, isPending, isSuccess } = useMutation({
@@ -62,8 +28,7 @@ export function useCreatePatientAction() {
                 variant: "default",
             });
         },
-        mutationFn: (variables: CreatePatientFormValues) =>
-            createPatient({ payload: variables, token: user!.token }),
+        mutationFn: (variables: CreatePatientForm) => createPatient(variables),
     });
 
     return {
@@ -76,7 +41,7 @@ export function useCreatePatientAction() {
 export function useCreatePatientForm() {
     const [step, setStep] = useState(1);
 
-    const form = useForm<CreatePatientFormValues>({
+    const form = useForm<CreatePatientForm>({
         resolver: zodResolver(createPatientSchema),
         defaultValues: createPatientInitialValues,
     });

@@ -31,7 +31,7 @@ export const createPatientSchema = z.object({
         .min(7)
         .refine(
             (value) => /^[0-9]+$/.test(value),
-            "Ingresa un número de documento válido sin puntos ni espacios"
+            "Ingresa un número de documento válido sin puntos ni espacios",
         ),
     names: z
         .string()
@@ -48,17 +48,17 @@ export const createPatientSchema = z.object({
         .string()
         .refine(
             (value) => value === "" || value.length >= 5,
-            "La dirección debe tener al menos 5 caracteres"
+            "La dirección debe tener al menos 5 caracteres",
         ),
     city: z
         .string()
         .refine(
             (value) => value === "" || value.length >= 5,
-            "La ciudad debe tener al menos 5 caracteres"
+            "La ciudad debe tener al menos 5 caracteres",
         ),
 });
 
-export type CreatePatientFormValues = z.infer<typeof createPatientSchema>;
+export type CreatePatientForm = z.infer<typeof createPatientSchema>;
 
 export const createPatientInitialValues = {
     dni: "",

@@ -15,40 +15,24 @@ const parseAppointment = (appointment: AppointmentResponse) => {
     };
 };
 
-export const getAppointment = async (token: Token, appointmentId: number) => {
-    if (!token) throw new Error();
-
+export const getAppointment = async (appointmentId: number) => {
     const response = await api.get<AppointmentResponse>(
         `/appointments/${appointmentId}`,
-        { headers: { Authorization: `Bearer ${token}` } },
     );
     return parseAppointment(response.data);
 };
 
-export const getAppointments = async (
-    month: Month,
-    token: Token,
-): Promise<Appointment[]> => {
-    if (!token) throw new Error();
-
+export const getAppointments = async (month: Month): Promise<Appointment[]> => {
     const response = await api.get<AppointmentResponse[]>(
         `/appointments?month=${month}`,
-        {
-            headers: { Authorization: `Bearer ${token}` },
-        },
     );
 
     return response.data.map(parseAppointment);
 };
 
-export const getClosestAppointment = async (
-    token: Token,
-): Promise<Appointment | null> => {
+export const getClosestAppointment = async (): Promise<Appointment | null> => {
     const response = await api.get<AppointmentResponse>(
         `/appointments/closest`,
-        {
-            headers: { Authorization: `Bearer ${token}` },
-        },
     );
 
     if (response.status === 204) return null;
