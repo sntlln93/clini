@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import Modal from "@/features/Modal";
 import { Heading } from "@/components/ui/typography";
 import { Badge } from "@/components/ui/badge";
-import { format } from "date-fns";
+import { differenceInCalendarISOWeekYears, format } from "date-fns";
 import { Patient } from "@/types/entities";
 import { es } from "date-fns/locale";
 import { WhatsappIcon } from "@/components/icons/WhatsappIcon";
@@ -11,6 +11,7 @@ import { Link, useLoaderData } from "@tanstack/react-router";
 import { AppointmentType } from "@/features/Appointments/components/AppointmentType";
 import { AppointmentStatus } from "@/features/Appointments/components/AppointmentStatus";
 import { usePreserveSearchNavigation } from "@/lib/hooks/usePreserveSearchNavigation";
+import { cn } from "@/lib/utils";
 
 export function ShowAppointmentModal() {
     const navigate = usePreserveSearchNavigation();
@@ -28,33 +29,22 @@ export function ShowAppointmentModal() {
             <main className="grid gap-2 mb-2">
                 <div className="bg-sky-500 gap-5 rounded-xl p-3 text-primary-foreground">
                     <div className="flex justify-end gap-2">
-                        <Link
-                            to={`https://wa.me/${appointment.phone}`}
-                            target="_blank"
-                        >
-                            <Badge className="bg-primary/70 py-1">
-                                {appointment.phone}
-                                <WhatsappIcon className="h-5 w-5 ml-2" />
-                            </Badge>
-                        </Link>
                         <AppointmentType appointmentType={appointment.type} />
+                        <Badge className="bg-primary/70 py-1">
+                            <AppointmentStatus
+                                date={appointment.date}
+                                status={appointment.status}
+                                time={appointment.time}
+                            />
+                        </Badge>
                     </div>
                     <div>
                         <span>Fecha</span>
-                        <Heading variant="h4" className="flex items-center">
+                        <Heading variant="h5" className="flex items-center">
                             {format(appointment.date, "dd 'de' LLLL", {
                                 locale: es,
                             })}{" "}
-                            a las {format(appointment.time, "HH:mm")} (
-                            <span className="font-light text-sm">
-                                <AppointmentStatus
-                                    slim
-                                    date={appointment.date}
-                                    status={appointment.status}
-                                    time={appointment.time}
-                                />
-                            </span>
-                            )
+                            a las {format(appointment.time, "HH:mm")}
                         </Heading>
                     </div>
 
@@ -71,11 +61,33 @@ export function ShowAppointmentModal() {
                         </div>
                     ) : null}
 
-                    <div className="flex justify-end gap-2 mt-2">
-                        <Button variant="secondary" size="sm">
+                    <div className="flex justify-end gap-2 mt-3">
+                        <Link
+                            search={{}}
+                            className={cn(
+                                buttonVariants({
+                                    variant: "secondary",
+                                    size: "sm",
+                                }),
+                                "text-sm",
+                            )}
+                        >
                             <span>Modificar</span>
                             <Pen className="h-4 w-4 ml-2" />
-                        </Button>
+                        </Link>
+                        <Link
+                            className={cn(
+                                buttonVariants({
+                                    size: "sm",
+                                }),
+                                "bg-green-500 text-sm",
+                            )}
+                            to={`https://wa.me/+549${appointment.phone}`}
+                            target="_blank"
+                        >
+                            {appointment.phone}
+                            <WhatsappIcon className="h-4 w-4 ml-2" />
+                        </Link>
                     </div>
                 </div>
             </main>
@@ -108,7 +120,7 @@ function PatientInfo({ patient }: { patient: Patient }) {
             <div>
                 <span>Fecha de nacimiento</span>
                 <Heading variant="h4">
-                    {format(patient.dateOfBirth, "dd-LL-yyyy")}
+                    {`${format(patient.dateOfBirth, "dd-LL-yyyy")} (${differenceInCalendarISOWeekYears(Date.now(), patient.dateOfBirth)} años)`}
                 </Heading>
             </div>
 

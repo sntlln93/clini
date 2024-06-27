@@ -9,6 +9,7 @@ const headingVariants = cva("scroll-m-20 tracking-tight", {
             h2: "border-b pb-2 text-3xl font-semibold first:mt-0",
             h3: "text-2xl font-semibold",
             h4: "text-xl font-semibold",
+            h5: "text-lg font-semibold",
         },
     },
     defaultVariants: {
@@ -23,7 +24,7 @@ export function Heading({
 }: {
     className?: string;
     children: ReactNode;
-    variant: "h1" | "h2" | "h3" | "h4";
+    variant: "h1" | "h2" | "h3" | "h4" | "h5";
 }) {
     const HeadingElement = variant;
 
