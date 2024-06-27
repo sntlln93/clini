@@ -4,16 +4,13 @@ import { z } from "zod";
 export const appointmentFormSchema = z.object({
     patientId: z.number().gt(0),
     date: z.date(),
-    time: z.string(),
-    duration: z.coerce.number(),
+    time: z.string().time(),
+    duration: z.coerce.number({ message: "Este campo es obligatorio" }),
     type: z.nativeEnum(AppointmentType),
-    phone: z
-        .string()
-        .refine((value) => /^\d{10}$/.test(value), {
-            message:
-                "El número de teléfono debe contener exactamente 10 dígitos numéricos.",
-        })
-        .optional(),
+    phone: z.string().refine((value) => /^\d{10}$/.test(value), {
+        message:
+            "El número de teléfono debe contener exactamente 10 dígitos numéricos.",
+    }),
     reason: z.string().optional(),
 });
 

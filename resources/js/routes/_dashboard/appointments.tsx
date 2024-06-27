@@ -5,11 +5,14 @@ import { SelectionWithNoAppointments } from "@/features/Appointments/components/
 import useMediaQuery from "@/lib/hooks/useMediaQuery";
 import { appointmentsQueryOptions } from "@/lib/queries/appointments.query";
 import { months } from "@/lib/consts/months";
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import { Appointment } from "@/types/entities";
 import { isSameDay } from "date-fns";
 import { usePreserveSearchNavigation } from "@/lib/hooks/usePreserveSearchNavigation";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+import { CalendarPlus } from "lucide-react";
 
 export const Route = createFileRoute("/_dashboard/appointments")({
     component: Page,
@@ -81,6 +84,19 @@ function Page() {
                 />
             </div>
             <div className="flex flex-col w-full">
+                <header className="flex justify-end mb-2">
+                    <Link
+                        search={{ modal: "appointment.create" }}
+                        className={cn(
+                            buttonVariants({
+                                size: "default",
+                            }),
+                        )}
+                    >
+                        <span className="sm:inline">Nuevo turno</span>
+                        <CalendarPlus className="h-4 w-4 ml-2" />
+                    </Link>
+                </header>
                 <ScrollArea className="h-screen">
                     <div className="flex flex-col gap-2 pb-4 pt-0">
                         {todaysAppointments.length === 0 ? (

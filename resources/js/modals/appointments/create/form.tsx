@@ -30,6 +30,7 @@ import { Patient } from "@/types/entities";
 import { OptionalLabel } from "@/components/form/optional-label";
 import { UseFormReturn } from "react-hook-form";
 import { AppointmentForm } from "./schema";
+import { Fragment } from "react";
 
 type FormProps = {
     form: UseFormReturn<AppointmentForm>;
@@ -43,7 +44,7 @@ export function AppointmentFields({ form, patient }: FormProps) {
                 <FormField
                     control={form.control}
                     name="patientId"
-                    render={({ field }) => <SelectPatient form={form} />}
+                    render={() => <SelectPatient form={form} />}
                 />
             ) : null}
 
@@ -97,9 +98,47 @@ export function AppointmentFields({ form, patient }: FormProps) {
                     render={({ field }) => (
                         <FormItem className="flex-1">
                             <FormLabel>Hora</FormLabel>
-                            <FormControl>
-                                <Input type="time" {...field} />
-                            </FormControl>
+                            <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                            >
+                                <FormControl>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Elija la hora" />
+                                    </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    {Array.from({ length: 16 }).map(
+                                        (_, index) => (
+                                            <Fragment key={index}>
+                                                <SelectItem
+                                                    value={`${(index + 7).toString().padStart(2, "0")}:00:00`}
+                                                >
+                                                    {`${(index + 7).toString().padStart(2, "0")}:00 hs`}
+                                                </SelectItem>
+                                                <SelectItem
+                                                    value={`${(index + 7).toString().padStart(2, "0")}:15:00`}
+                                                >
+                                                    {`${(index + 7).toString().padStart(2, "0")}:15 hs`}
+                                                </SelectItem>
+                                                <SelectItem
+                                                    value={`${(index + 7).toString().padStart(2, "0")}:30:00`}
+                                                >
+                                                    {`${(index + 7).toString().padStart(2, "0")}:30 hs`}
+                                                </SelectItem>
+                                                <SelectItem
+                                                    value={`${(index + 7).toString().padStart(2, "0")}:45:00`}
+                                                >
+                                                    {`${(index + 7).toString().padStart(2, "0")}:45 hs`}
+                                                </SelectItem>
+                                            </Fragment>
+                                        ),
+                                    )}
+                                    <SelectItem value="23:00:00">
+                                        23:00 hs
+                                    </SelectItem>
+                                </SelectContent>
+                            </Select>
                             <FormMessage />
                         </FormItem>
                     )}
@@ -113,7 +152,10 @@ export function AppointmentFields({ form, patient }: FormProps) {
                     render={({ field }) => (
                         <FormItem className="flex-1">
                             <FormLabel>Duración</FormLabel>
-                            <Select onValueChange={field.onChange}>
+                            <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value.toString()}
+                            >
                                 <FormControl>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Elija una duración estimada para la consulta" />
@@ -172,9 +214,7 @@ export function AppointmentFields({ form, patient }: FormProps) {
                 name="phone"
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel>
-                            Teléfono <OptionalLabel />
-                        </FormLabel>
+                        <FormLabel>Teléfono</FormLabel>
                         <FormControl>
                             <Input
                                 autoComplete="off"

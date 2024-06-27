@@ -40,10 +40,6 @@ class StoreAppointmentRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        $formatted_time = $this->input('time').':00';
-        $this->merge([
-            'patient_id' => $this->input('patientId'),
-            'time' => $formatted_time,
-        ]);
+        $this->merge(['patient_id' => $this->input('patientId')]);
     }
 }
