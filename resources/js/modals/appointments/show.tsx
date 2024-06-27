@@ -6,7 +6,7 @@ import { differenceInCalendarISOWeekYears, format } from "date-fns";
 import { Patient } from "@/types/entities";
 import { es } from "date-fns/locale";
 import { WhatsappIcon } from "@/components/icons/WhatsappIcon";
-import { Pen } from "lucide-react";
+import { Pen, Send } from "lucide-react";
 import { Link, useLoaderData } from "@tanstack/react-router";
 import { AppointmentType } from "@/features/Appointments/components/AppointmentType";
 import { AppointmentStatus } from "@/features/Appointments/components/AppointmentStatus";
@@ -80,13 +80,15 @@ export function ShowAppointmentModal() {
                                 buttonVariants({
                                     size: "sm",
                                 }),
-                                "bg-green-500 text-sm",
+                                "bg-[#25d366] text-sm text-[#075e54]",
+                                "hover:bg-[#005d4b] text-sm hover:text-[#dcf8c6]",
                             )}
                             to={`https://wa.me/+549${appointment.phone}`}
                             target="_blank"
                         >
-                            {appointment.phone}
-                            <WhatsappIcon className="h-4 w-4 ml-2" />
+                            <WhatsappIcon className="h-4 w-4" />
+                            <span className="mx-2">{appointment.phone}</span>
+                            <Send className="h-4 w-4" />
                         </Link>
                     </div>
                 </div>

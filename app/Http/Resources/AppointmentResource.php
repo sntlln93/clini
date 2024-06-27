@@ -21,6 +21,12 @@ class AppointmentResource extends JsonResource
      */
     public function toArray(Request $request)
     {
+        $digits = str_split($this->resource->phone, 1);
+        $area_code = implode('', array_slice($digits, 0, 3));
+        $first_segment = implode('', array_slice($digits, 3, 3));
+        $last_segment = implode('', array_slice($digits, 6));
+        $formatted_phone_number = "$area_code $first_segment $last_segment";
+
         return [
             'id' => $this->resource->id,
             'date' => $this->resource->date,
@@ -28,7 +34,7 @@ class AppointmentResource extends JsonResource
             'type' => $this->resource->type,
             'status' => $this->resource->status,
             'patient' => new PatientResource($this->resource->patient),
-            'phone' => $this->resource->phone,
+            'phone' => $formatted_phone_number,
             'reason' => $this->resource->reason,
             'notes' => $this->resource->notes,
             'duration' => $this->resource->duration,
