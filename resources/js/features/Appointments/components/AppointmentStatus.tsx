@@ -9,7 +9,6 @@ type AppointmentStatusProps = {
     status: Status;
     time: Date;
     className?: string;
-    slim?: boolean;
 };
 
 export function AppointmentStatus({
@@ -17,7 +16,6 @@ export function AppointmentStatus({
     status,
     time,
     className = "",
-    slim = false,
 }: AppointmentStatusProps) {
     const datetime = mergeDateAndTime(date, time);
 
@@ -25,12 +23,10 @@ export function AppointmentStatus({
         <div className={className}>
             {status == Status.Pending && (
                 <span>
-                    {slim
-                        ? "Pendiente"
-                        : formatDistance(datetime, new Date(), {
-                              addSuffix: true,
-                              locale: es,
-                          })}
+                    {formatDistance(datetime, new Date(), {
+                        addSuffix: true,
+                        locale: es,
+                    })}
                     <Clock className="h-5 w-5 ml-2 stroke-amber-500 inline" />
                 </span>
             )}
