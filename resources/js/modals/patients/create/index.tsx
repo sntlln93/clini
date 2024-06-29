@@ -43,7 +43,7 @@ export default function CreatePatientModal() {
                     {step === 1 ? <PatientFields form={form} /> : null}
                     {step === 2 ? <AddressFields form={form} /> : null}
 
-                    <Modal.Actions>
+                    <Modal.Actions className="gap-2">
                         {step === 1 ? (
                             <>
                                 <Button
