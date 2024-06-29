@@ -1,10 +1,10 @@
-import { AppointmentStatus } from "./enums/entities";
+import { AppointmentStatus, AppointmentType } from "./enums/entities";
 
 export type Appointment = {
     id: number;
     date: Date;
     time: Date;
-    type: string;
+    type: AppointmentType;
     status: AppointmentStatus;
     patient: Patient;
     phone: string;
