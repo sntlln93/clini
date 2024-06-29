@@ -13,6 +13,9 @@ import { usePreserveSearchNavigation } from "@/lib/hooks/usePreserveSearchNaviga
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { CalendarPlus } from "lucide-react";
+import { useState } from "react";
+import { AppointmentStatus as Status } from "@/types/enums/entities";
+import { AppointmentStatusFilter } from "@/features/Appointments/components/AppointmentStatusFilter";
 
 export const Route = createFileRoute("/_dashboard/appointments")({
     component: Page,
@@ -36,6 +39,12 @@ export const Route = createFileRoute("/_dashboard/appointments")({
 function Page() {
     const breakpoint = useMediaQuery();
     const navigate = usePreserveSearchNavigation();
+    const statusFilter = useState<Status[]>([
+        Status.Done,
+        Status.Missed,
+        Status.Pending,
+        Status.Canceled,
+    ]);
 
     const qs = Route.useSearch();
     const { month, day, year } = qs;
@@ -44,6 +53,10 @@ function Page() {
     const appointments = Route.useLoaderData();
     const todaysAppointments = appointments.filter((appointment: Appointment) =>
         isSameDay(appointment.date, selectedDate),
+    );
+
+    const filteredAppointments = todaysAppointments.filter((appointment) =>
+        statusFilter[0].includes(appointment.status),
     );
 
     const daysWithEvents = appointments.reduce<Date[]>((acc, appointment) => {
@@ -84,7 +97,13 @@ function Page() {
                 />
             </div>
             <div className="flex flex-col w-full">
-                <header className="flex justify-end mb-2">
+                <header className="flex justify-between mb-2">
+                    <AppointmentStatusFilter
+                        statusFilter={statusFilter}
+                        statuses={todaysAppointments.map(
+                            ({ status }) => status,
+                        )}
+                    />
                     <Link
                         search={{ modal: "appointment.create" }}
                         className={cn(
@@ -99,12 +118,10 @@ function Page() {
                 </header>
                 <ScrollArea className="h-screen">
                     <div className="flex flex-col gap-2 pb-4 pt-0">
-                        {todaysAppointments.length === 0 ? (
-                            <SelectionWithNoAppointments
-                                selectedDate={selectedDate}
-                            />
+                        {filteredAppointments.length === 0 ? (
+                            <SelectionWithNoAppointments />
                         ) : (
-                            todaysAppointments.map((appointment) => (
+                            filteredAppointments.map((appointment) => (
                                 <AppointmentCard
                                     appointment={appointment}
                                     key={appointment.id}

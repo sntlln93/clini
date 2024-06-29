@@ -33,7 +33,7 @@ export function AppointmentStatus({
 
             {status == Status.Done && (
                 <span>
-                    Completado
+                    Asistió
                     <CircleCheck className="h-5 w-5 ml-2 stroke-green-500 inline" />
                 </span>
             )}

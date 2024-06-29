@@ -1,7 +1,5 @@
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { formatDate } from "date-fns";
-import { es } from "date-fns/locale";
 
 export function EmptySelection() {
     const classes = {
@@ -10,7 +8,7 @@ export function EmptySelection() {
             "h-5 w-5 p-0 border bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
         empty: cn(
             buttonVariants({ variant: "ghost" }),
-            "h-5 w-5 border p-0 font-normal aria-selected:opacity-100 hover:bg-blue-100"
+            "h-5 w-5 border p-0 font-normal aria-selected:opacity-100 hover:bg-blue-100",
         ),
     };
 
@@ -35,19 +33,10 @@ export function EmptySelection() {
     );
 }
 
-export function SelectionWithNoAppointments({
-    selectedDate,
-}: {
-    selectedDate: Date;
-}) {
+export function SelectionWithNoAppointments() {
     return (
         <div className="min-h-[50px] grid place-content-center rounded-lg border transition-all hover:bg-accent">
-            No hay turnos{" "}
-            {selectedDate === new Date()
-                ? "hoy"
-                : `el ${formatDate(selectedDate, "d 'de' LLLL", {
-                      locale: es,
-                  })}`}
+            No hay turnos para mostrar
         </div>
     );
 }
