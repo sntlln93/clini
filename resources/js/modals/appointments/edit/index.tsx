@@ -38,7 +38,7 @@ export default function EditAppointmentModal() {
     };
 
     return (
-        <Modal open={true} handleClose={closeSelf} title="Nuevo Turno">
+        <Modal open={true} handleClose={closeSelf} title="Modificar Turno">
             <Form {...form}>
                 <form
                     className="grid gap-5"
