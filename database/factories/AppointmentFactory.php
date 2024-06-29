@@ -38,7 +38,7 @@ class AppointmentFactory extends Factory
             'status' => $status,
             'patient_id' => Arr::random((Patient::pluck('id')->all())),
             'user_id' => 1,
-            'phone' => fake()->phoneNumber(),
+            'phone' => fake()->numerify('##########'),
             'reason' => fake()->sentence(),
             'notes' => fake()->sentence(),
             'duration' => Arr::random([30, 60, 90]),
