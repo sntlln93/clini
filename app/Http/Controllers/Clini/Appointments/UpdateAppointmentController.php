@@ -11,8 +11,8 @@ class UpdateAppointmentController extends Controller
 {
     public function __invoke(UpdateAppointmentRequest $request, Appointment $appointment): AppointmentResource
     {
-        /** @var array<string,array<string,string>> $validated */
-        $validated = $request->validated()['appointment'];
+        /** @var array<string,string> $validated */
+        $validated = $request->validated();
 
         $appointment->update($validated);
 

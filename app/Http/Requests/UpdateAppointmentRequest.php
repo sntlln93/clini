@@ -25,14 +25,14 @@ class UpdateAppointmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'appointment.status' => ['sometimes', Rule::in(AppointmentStatus::cases())],
-            'appointment.type' => ['sometimes', Rule::in(AppointmentType::cases())],
-            'appointment.date' => ['sometimes', 'date'],
-            'appointment.time' => ['sometimes', 'date_format:H:i:s'],
-            'appointment.phone' => ['sometimes'],
-            'appointment.reason' => ['sometimes', 'nullable'],
-            'appointment.notes' => ['sometimes', 'nullable'],
-            'appointment.duration' => ['sometimes', 'numeric'],
+            'status' => ['sometimes', Rule::in(AppointmentStatus::cases())],
+            'type' => ['sometimes', Rule::in(AppointmentType::cases())],
+            'date' => ['sometimes', 'date'],
+            'time' => ['sometimes', 'date_format:H:i:s'],
+            'phone' => ['sometimes'],
+            'reason' => ['sometimes', 'nullable'],
+            'notes' => ['sometimes', 'nullable'],
+            'duration' => ['sometimes', 'numeric'],
         ];
     }
 }
