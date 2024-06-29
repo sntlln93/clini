@@ -63,7 +63,10 @@ export function ShowAppointmentModal() {
 
                     <div className="flex justify-end gap-2 mt-3">
                         <Link
-                            search={{}}
+                            search={{
+                                modal: "appointment.edit",
+                                appointmentId: appointment.id,
+                            }}
                             className={cn(
                                 buttonVariants({
                                     variant: "secondary",
@@ -83,7 +86,7 @@ export function ShowAppointmentModal() {
                                 "bg-[#25d366] text-sm text-[#075e54]",
                                 "hover:bg-[#005d4b] text-sm hover:text-[#dcf8c6]",
                             )}
-                            to={`https://wa.me/+549${appointment.phone}`}
+                            to={`https://wa.me/+549${appointment.phone.split(" ").join("")}`}
                             target="_blank"
                         >
                             <WhatsappIcon className="h-4 w-4" />

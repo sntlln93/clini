@@ -26,17 +26,26 @@ import CreatePatientModal from "@/modals/patients/create";
 import { appointmentQueryOptions } from "@/lib/queries/appointments.query";
 import { ShowAppointmentModal } from "@/modals/appointments/show";
 import CreateAppointmentModal from "@/modals/appointments/create";
+import EditAppointmentModal from "@/modals/appointments/edit";
 
 const searchSchema = z
     .object({
         modal: z
-            .enum(["patient.create", "appointment.show", "appointment.create"])
+            .enum([
+                "patient.create",
+                "appointment.show",
+                "appointment.create",
+                "appointment.edit",
+            ])
             .optional(),
         appointmentId: z.number().optional(),
     })
     .refine(
         (schema) => {
-            if (schema.modal === "appointment.show") {
+            if (
+                schema.modal === "appointment.show" ||
+                schema.modal === "appointment.edit"
+            ) {
                 return schema.appointmentId !== undefined;
             }
 
@@ -44,7 +53,7 @@ const searchSchema = z
         },
         {
             message:
-                "appointmentId is required when modal is 'appointment.show'",
+                "appointmentId is required when modal is 'appointment.show' or 'appointment.edit'",
             path: ["appointmentId"],
         },
     );
@@ -153,6 +162,7 @@ function DashboardLayout() {
             {modal === "patient.create" && <CreatePatientModal />}
             {modal === "appointment.show" && <ShowAppointmentModal />}
             {modal === "appointment.create" && <CreateAppointmentModal />}
+            {modal === "appointment.edit" && <EditAppointmentModal />}
         </>
     );
 }

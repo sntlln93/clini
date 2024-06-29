@@ -1,10 +1,8 @@
 import api from "./api";
 import { Appointment } from "@/types/entities";
 import { parse, parseISO } from "date-fns";
-import { Token } from "@/types/auth";
 import { Month } from "@/lib/consts/months";
-import { AppointmentResponse } from "@/types/api";
-import { AppointmentForm } from "@/modals/appointments/create/schema";
+import { AppointmentPayload, AppointmentResponse } from "@/types/api";
 import { toPhpStrtotimeFormat } from "../utils";
 
 const parseAppointment = (appointment: AppointmentResponse) => {
@@ -41,9 +39,21 @@ export const getClosestAppointment = async (): Promise<Appointment | null> => {
 };
 
 export const createAppointment = async (
-    payload: AppointmentForm,
+    payload: AppointmentPayload,
 ): Promise<Appointment> => {
     const response = await api.post("/appointments", {
+        ...payload,
+        date: toPhpStrtotimeFormat(payload.date),
+    });
+
+    return parseAppointment(response.data);
+};
+
+export const updateAppointment = async (
+    payload: AppointmentPayload,
+    appointmentId: number,
+): Promise<Appointment> => {
+    const response = await api.patch(`/appointments/${appointmentId}`, {
         ...payload,
         date: toPhpStrtotimeFormat(payload.date),
     });
