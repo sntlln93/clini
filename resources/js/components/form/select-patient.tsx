@@ -23,8 +23,8 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { AppointmentForm } from "@/modals/appointments/create/schema";
 import { searchPatient } from "@/lib/services/patient";
+import { AppointmentForm } from "@/features/Appointments/form/schema";
 
 interface SelectPatientProps {
     form: UseFormReturn<AppointmentForm>;
