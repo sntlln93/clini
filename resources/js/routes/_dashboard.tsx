@@ -102,7 +102,7 @@ function DashboardLayout() {
         <>
             <div className="w-full flex">
                 {navToDisplay === "aside" && <Aside />}
-                <div className={`w-full py-2 px-10 ml-[${offset}]`}>
+                <div className={`w-full py-2 px-4 ml-[${offset}]`}>
                     <div className="flex flex-1 items-center">
                         <Prompter />
                         <DropdownMenu>
