@@ -4,67 +4,29 @@ import Modal from "@/features/Modal";
 import { Spinner } from "@/components/Spinner";
 import { useEffect } from "react";
 import { usePreserveSearchNavigation } from "@/lib/hooks/usePreserveSearchNavigation";
-import { AppointmentFields } from "./form";
-import { useForm } from "react-hook-form";
-import { AppointmentForm, appointmentFormSchema } from "./schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { ApiValidationError } from "@/types/api";
-import { useToast } from "@/components/ui/use-toast";
-import { createAppointment } from "@/lib/services/appointment";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
-import { AppointmentType } from "@/types/enums/entities";
-import { useRouter } from "@tanstack/react-router";
+import {
+    AppointmentDatePicker,
+    AppointmentTimePicker,
+    AppointmentDurationSelect,
+    AppointmentTypeSelect,
+} from "@/features/Appointments/form";
+import {
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { SelectPatient } from "@/components/form/select-patient";
+import { Textarea } from "@/components/ui/textarea";
+import { OptionalLabel } from "@/components/form/optional-label";
+import { useCreate } from "./useCreate";
 
 export default function CreateAppointmentModal() {
     const navigate = usePreserveSearchNavigation();
-    const router = useRouter();
-
-    const { toast } = useToast();
-
-    const defaultTime = () => {
-        const currentHour = new Date().getHours();
-
-        if (currentHour < 7 || currentHour > 23) return "07:00:00";
-
-        return (currentHour + 1).toString().padStart(2, "0") + ":00:00";
-    };
-
-    const form = useForm<AppointmentForm>({
-        resolver: zodResolver(appointmentFormSchema),
-        defaultValues: {
-            phone: "",
-            duration: 60,
-            type: AppointmentType.Practice,
-            time: defaultTime(),
-        },
-    });
-
-    const { mutate, isPending, isSuccess } = useMutation({
-        onError: ({ response }: ApiValidationError) =>
-            toast({
-                title: "Error",
-                description: response?.data.message,
-                variant: "destructive",
-            }),
-        onSuccess: async (data) => {
-            toast({
-                title: "Turno agregado",
-                description: `${format(data.date, "dd 'de' LLLL", { locale: es })} a las ${format(data.time, "HH:mm", { locale: es })}`,
-                variant: "default",
-            });
-            await router.invalidate();
-            router.navigate({
-                search: {
-                    day: data.date.getDate(),
-                    month: data.date.getMonth() + 1,
-                    year: data.date.getFullYear(),
-                },
-            });
-        },
-        mutationFn: (payload: AppointmentForm) => createAppointment(payload),
-    });
+    const { onSubmit, isPending, isSuccess, form } = useCreate();
 
     useEffect(() => {
         if (isSuccess) {
@@ -76,8 +38,6 @@ export default function CreateAppointmentModal() {
         navigate({ modal: undefined });
     };
 
-    const onSubmit = (values: AppointmentForm) => mutate(values);
-
     return (
         <Modal open={true} handleClose={closeSelf} title="Nuevo Turno">
             <Form {...form}>
@@ -85,7 +45,86 @@ export default function CreateAppointmentModal() {
                     className="grid gap-5"
                     onSubmit={form.handleSubmit(onSubmit)}
                 >
-                    <AppointmentFields form={form} />
+                    <FormField
+                        control={form.control}
+                        name="patientId"
+                        render={() => <SelectPatient form={form} />}
+                    />
+
+                    <div className="flex gap-2">
+                        <FormField
+                            control={form.control}
+                            name="date"
+                            render={({ field }) => (
+                                <AppointmentDatePicker field={field} />
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="time"
+                            render={({ field }) => (
+                                <AppointmentTimePicker field={field} />
+                            )}
+                        />
+                    </div>
+
+                    <div className="flex gap-2">
+                        <FormField
+                            control={form.control}
+                            name="duration"
+                            render={({ field }) => (
+                                <AppointmentDurationSelect field={field} />
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="type"
+                            render={({ field }) => (
+                                <AppointmentTypeSelect field={field} />
+                            )}
+                        />
+                    </div>
+
+                    <FormField
+                        control={form.control}
+                        name="phone"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Teléfono</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        autoComplete="off"
+                                        placeholder="351789645"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormDescription>
+                                    Un número válido consiste de exactamente 10
+                                    dígitos numéricos incluyendo el código de
+                                    área.
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="reason"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>
+                                    Motivo de la consulta <OptionalLabel />
+                                </FormLabel>
+                                <FormControl>
+                                    <Textarea {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
 
                     <Modal.Actions>
                         <Button disabled={isPending} type="submit">
