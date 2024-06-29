@@ -99,7 +99,7 @@ export function AppointmentStatusFilter({
                             ])
                         }
                     >
-                        <span>Motrar todos</span>
+                        <span>Mostrar todos</span>
                         <CircleCheck className="fill-slate-50 h-5 w-5 ml-1 stroke-green-500 inline" />
                         <CalendarX2 className="fill-slate-50 h-5 w-5 ml-[-.5rem] stroke-red-500 inline" />
                         <CircleX className="fill-slate-50 h-5 w-5 ml-[-.5rem] stroke-red-500 inline" />
