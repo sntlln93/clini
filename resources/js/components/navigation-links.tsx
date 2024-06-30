@@ -1,9 +1,9 @@
-import { Calendar, Settings, Home, Users, type LucideIcon } from "lucide-react";
+import { Calendar, Settings, Map, Users, type LucideIcon } from "lucide-react";
 
 export const links: NavLink[] = [
     {
         title: "Inicio",
-        icon: Home,
+        icon: Calendar,
         href: "/",
     },
     {
@@ -12,9 +12,9 @@ export const links: NavLink[] = [
         href: "/patients",
     },
     {
-        title: "Turnos",
-        icon: Calendar,
-        href: "/appointments",
+        title: "Hoja de ruta",
+        icon: Map,
+        href: "/roadmap",
     },
     {
         title: "Configuración",

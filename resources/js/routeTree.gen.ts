@@ -16,8 +16,8 @@ import { Route as DashboardImport } from './routes/_dashboard'
 import { Route as DashboardIndexImport } from './routes/_dashboard/index'
 import { Route as PublicLoginImport } from './routes/_public/login'
 import { Route as DashboardSettingsImport } from './routes/_dashboard/settings'
+import { Route as DashboardRoadmapImport } from './routes/_dashboard/roadmap'
 import { Route as DashboardPatientsImport } from './routes/_dashboard/patients'
-import { Route as DashboardAppointmentsImport } from './routes/_dashboard/appointments'
 
 // Create/Update Routes
 
@@ -46,13 +46,13 @@ const DashboardSettingsRoute = DashboardSettingsImport.update({
   getParentRoute: () => DashboardRoute,
 } as any)
 
-const DashboardPatientsRoute = DashboardPatientsImport.update({
-  path: '/patients',
+const DashboardRoadmapRoute = DashboardRoadmapImport.update({
+  path: '/roadmap',
   getParentRoute: () => DashboardRoute,
 } as any)
 
-const DashboardAppointmentsRoute = DashboardAppointmentsImport.update({
-  path: '/appointments',
+const DashboardPatientsRoute = DashboardPatientsImport.update({
+  path: '/patients',
   getParentRoute: () => DashboardRoute,
 } as any)
 
@@ -74,18 +74,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicImport
       parentRoute: typeof rootRoute
     }
-    '/_dashboard/appointments': {
-      id: '/_dashboard/appointments'
-      path: '/appointments'
-      fullPath: '/appointments'
-      preLoaderRoute: typeof DashboardAppointmentsImport
-      parentRoute: typeof DashboardImport
-    }
     '/_dashboard/patients': {
       id: '/_dashboard/patients'
       path: '/patients'
       fullPath: '/patients'
       preLoaderRoute: typeof DashboardPatientsImport
+      parentRoute: typeof DashboardImport
+    }
+    '/_dashboard/roadmap': {
+      id: '/_dashboard/roadmap'
+      path: '/roadmap'
+      fullPath: '/roadmap'
+      preLoaderRoute: typeof DashboardRoadmapImport
       parentRoute: typeof DashboardImport
     }
     '/_dashboard/settings': {
@@ -116,8 +116,8 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   DashboardRoute: DashboardRoute.addChildren({
-    DashboardAppointmentsRoute,
     DashboardPatientsRoute,
+    DashboardRoadmapRoute,
     DashboardSettingsRoute,
     DashboardIndexRoute,
   }),
@@ -139,8 +139,8 @@ export const routeTree = rootRoute.addChildren({
     "/_dashboard": {
       "filePath": "_dashboard.tsx",
       "children": [
-        "/_dashboard/appointments",
         "/_dashboard/patients",
+        "/_dashboard/roadmap",
         "/_dashboard/settings",
         "/_dashboard/"
       ]
@@ -151,12 +151,12 @@ export const routeTree = rootRoute.addChildren({
         "/_public/login"
       ]
     },
-    "/_dashboard/appointments": {
-      "filePath": "_dashboard/appointments.tsx",
-      "parent": "/_dashboard"
-    },
     "/_dashboard/patients": {
       "filePath": "_dashboard/patients.tsx",
+      "parent": "/_dashboard"
+    },
+    "/_dashboard/roadmap": {
+      "filePath": "_dashboard/roadmap.tsx",
       "parent": "/_dashboard"
     },
     "/_dashboard/settings": {
