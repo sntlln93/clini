@@ -39,7 +39,7 @@ export const getClosestAppointment = async (): Promise<Appointment | null> => {
 };
 
 export const createAppointment = async (
-    payload: AppointmentPayload,
+    payload: Omit<AppointmentPayload, "status">,
 ): Promise<Appointment> => {
     const response = await api.post("/appointments", {
         ...payload,
@@ -50,12 +50,16 @@ export const createAppointment = async (
 };
 
 export const updateAppointment = async (
-    payload: AppointmentPayload,
+    payload: Partial<AppointmentPayload>,
     appointmentId: number,
 ): Promise<Appointment> => {
+    let formattedDate;
+    if (payload.date) {
+        formattedDate = { date: toPhpStrtotimeFormat(payload.date) };
+    }
     const response = await api.patch(`/appointments/${appointmentId}`, {
         ...payload,
-        date: toPhpStrtotimeFormat(payload.date),
+        ...formattedDate,
     });
 
     return parseAppointment(response.data);
