@@ -29,13 +29,11 @@ export function ShowAppointmentModal() {
             <main className="grid gap-2 mb-2">
                 <div className="flex gap-2">
                     <AppointmentType appointmentType={appointment.type} />
-                    <Badge className="bg-primary/70 py-1">
-                        <AppointmentStatus
-                            date={appointment.date}
-                            status={appointment.status}
-                            time={appointment.time}
-                        />
-                    </Badge>
+                    <AppointmentStatus
+                        date={appointment.date}
+                        status={appointment.status}
+                        time={appointment.time}
+                    />
                 </div>
                 <div className="bg-sky-500 gap-5 rounded-xl p-3 text-primary-foreground">
                     <div>
