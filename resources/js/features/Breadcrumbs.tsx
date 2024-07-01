@@ -19,6 +19,8 @@ export function Breadcrumbs() {
             return links.find((link) => link.href === crumb) ?? links[0];
         });
 
+    if (crumbs.length === 1) return null;
+
     return (
         <Breadcrumb>
             <BreadcrumbList>
