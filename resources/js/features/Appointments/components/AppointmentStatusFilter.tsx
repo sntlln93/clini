@@ -8,24 +8,9 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import {
-    CalendarX2,
-    CircleCheck,
-    CircleX,
-    Clock,
-    FilterX,
-    Filter,
-} from "lucide-react";
+import { CalendarX2, CircleCheck, CircleX, Clock, Filter } from "lucide-react";
 
 import { AppointmentStatus as Status } from "@/types/enums/entities";
-import useMediaQuery from "@/lib/hooks/useMediaQuery";
-
-const STATUS_LABEL = {
-    [Status.Canceled]: "cancelados",
-    [Status.Done]: "completados",
-    [Status.Missed]: "perdidos",
-    [Status.Pending]: "pendientes",
-};
 
 type FilterProps = {
     statusFilter: [Status[], React.Dispatch<React.SetStateAction<Status[]>>];
@@ -37,25 +22,6 @@ export function AppointmentStatusFilter({
     statuses,
 }: FilterProps) {
     const [selected, setSelected] = statusFilter;
-    const breakpoint = useMediaQuery();
-
-    const getFilterLabel = () => {
-        if (breakpoint === "sm") return;
-
-        const totalStatuses = selected.length;
-
-        if (totalStatuses === 0) {
-            return "Ocultando todos los turnos";
-        } else if (totalStatuses === 1) {
-            return `Mostrando ${STATUS_LABEL[selected[0]]}`;
-        } else if (totalStatuses === 2) {
-            return `Mostrando ${selected.map((status) => STATUS_LABEL[status]).join(" y ")}`;
-        } else if (totalStatuses === 3) {
-            return `Mostrando ${STATUS_LABEL[selected[0]]}, ${STATUS_LABEL[selected[1]]}, y 1 más`;
-        } else {
-            return "Mostrando todos los turnos";
-        }
-    };
 
     const toggleStatus = (status: Status) => {
         const updatedStatuses = [...selected];
@@ -74,18 +40,44 @@ export function AppointmentStatusFilter({
         <div className="flex gap-2">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button
-                        variant="outline"
-                        size={
-                            breakpoint === "sm" ? "inputCompanion" : "default"
-                        }
-                    >
-                        {selected.length !== 4 ? (
-                            <FilterX className="h-5 w-5 mr-2 inline" />
+                    <Button variant="outline" size={"default"}>
+                        {selected.length === 0 ? (
+                            <>
+                                Filtrar
+                                <Filter className="h-4 w-4 ml-2 inline" />
+                            </>
                         ) : (
-                            <Filter className="h-5 w-5 mr-2 inline" />
+                            <>
+                                <span className="mr-2">Mostrando</span>
+                                {selected.map((status, index) => {
+                                    if (status === Status.Done) {
+                                        return (
+                                            <CircleCheck
+                                                className={`fill-white h-5 w-5 ml-[${index === 0 ? "0" : "-.5rem"}] stroke-green-500 inline`}
+                                            />
+                                        );
+                                    } else if (status === Status.Canceled) {
+                                        return (
+                                            <CalendarX2
+                                                className={`fill-white h-5 w-5 ml-[${index === 0 ? "0" : "-.5rem"}] stroke-red-500 inline`}
+                                            />
+                                        );
+                                    } else if (status === Status.Missed) {
+                                        return (
+                                            <CircleX
+                                                className={`fill-white h-5 w-5 ml-[${index === 0 ? "0" : "-.5rem"}] stroke-red-500 inline`}
+                                            />
+                                        );
+                                    } else if (status === Status.Pending) {
+                                        return (
+                                            <Clock
+                                                className={`fill-white h-5 w-5 ml-[${index === 0 ? "0" : "-.5rem"}] stroke-amber-500 inline`}
+                                            />
+                                        );
+                                    }
+                                })}
+                            </>
                         )}
-                        {getFilterLabel()}
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
