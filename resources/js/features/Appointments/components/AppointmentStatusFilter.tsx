@@ -53,24 +53,28 @@ export function AppointmentStatusFilter({
                                     if (status === Status.Done) {
                                         return (
                                             <CircleCheck
+                                                key={index}
                                                 className={`fill-white h-5 w-5 ml-[${index === 0 ? "0" : "-.5rem"}] stroke-green-500 inline`}
                                             />
                                         );
                                     } else if (status === Status.Canceled) {
                                         return (
                                             <CalendarX2
+                                                key={index}
                                                 className={`fill-white h-5 w-5 ml-[${index === 0 ? "0" : "-.5rem"}] stroke-red-500 inline`}
                                             />
                                         );
                                     } else if (status === Status.Missed) {
                                         return (
                                             <CircleX
+                                                key={index}
                                                 className={`fill-white h-5 w-5 ml-[${index === 0 ? "0" : "-.5rem"}] stroke-red-500 inline`}
                                             />
                                         );
                                     } else if (status === Status.Pending) {
                                         return (
                                             <Clock
+                                                key={index}
                                                 className={`fill-white h-5 w-5 ml-[${index === 0 ? "0" : "-.5rem"}] stroke-amber-500 inline`}
                                             />
                                         );
