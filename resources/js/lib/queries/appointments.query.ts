@@ -8,8 +8,8 @@ export const appointmentQueryOptions = (appointmentId: number) =>
         queryFn: () => getAppointment(appointmentId),
     });
 
-export const appointmentsQueryOptions = (month: Month) =>
+export const appointmentsQueryOptions = (month: Month, year: number) =>
     queryOptions({
-        queryKey: ["appointments", month],
-        queryFn: ({ queryKey: [, month] }) => getAppointments(month as Month),
+        queryKey: ["appointments", month, year],
+        queryFn: () => getAppointments(month, year),
     });

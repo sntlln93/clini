@@ -27,6 +27,7 @@ class AppointmentsRequest extends FormRequest
     {
         return [
             'month' => ['required', Rule::in(self::MONTHS)],
+            'year' => ['required', 'digits:4'],
         ];
     }
 

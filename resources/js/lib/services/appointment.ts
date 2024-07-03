@@ -20,9 +20,12 @@ export const getAppointment = async (appointmentId: number) => {
     return parseAppointment(response.data);
 };
 
-export const getAppointments = async (month: Month): Promise<Appointment[]> => {
+export const getAppointments = async (
+    month: Month,
+    year: number,
+): Promise<Appointment[]> => {
     const response = await api.get<AppointmentResponse[]>(
-        `/appointments?month=${month}`,
+        `/appointments?month=${month}&year=${year}`,
     );
 
     return response.data.map(parseAppointment);

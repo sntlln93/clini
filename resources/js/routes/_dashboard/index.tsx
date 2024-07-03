@@ -20,9 +20,9 @@ import { AppointmentStatusFilter } from "@/features/Appointments/components/Appo
 export const Route = createFileRoute("/_dashboard/")({
     component: Page,
     loaderDeps: ({ search }) => search,
-    loader: ({ context: { queryClient }, deps }) => {
+    loader: ({ context: { queryClient }, deps: { month, year } }) => {
         return queryClient.ensureQueryData(
-            appointmentsQueryOptions(months[deps.month - 1]),
+            appointmentsQueryOptions(months[month - 1], year),
         );
     },
     validateSearch: z.object({
