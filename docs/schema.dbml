@@ -1,0 +1,93 @@
+Table appointments {
+  id integer [ pk, increment, unique ]
+  date date
+  time time
+  type AppointmentType
+  status AppointmentStatus
+  patient_id int [ref: > patients.id]
+  user_id int [ref: > users.id]
+  phone varchar
+  reason varchar [null]
+  notes varchar [null]
+  duration int
+}
+
+Table practices {
+  id int [pk, increment, unique]
+  name varchar
+  logo varchar
+}
+
+Table practice_user {
+  user_id int [ref: > users.id]
+  practice_id int [ref: > practices.id]
+  is_management bool [default: false]
+}
+
+Table subscriptions {
+  id int [pk, increment, unique]
+  practice_id int [ref: - practices.id]
+  start date
+  end date
+}
+
+Table patients {
+  id int [pk, increment, unique]
+  dni varchar
+  names varchar
+  lastname varchar
+  date_of_birth date 
+  sex varchar
+  healthcare varchar [null]
+}
+
+Table addresses {
+  id int [pk, increment, unique]
+  address_line varchar
+  city varchar
+  addressable_id int [ref: > patients.id, ref: > practices.id]  
+  addressable_type Addressable
+}
+
+Table schedulable_times {
+  user_id int [ref: > users.id]
+  practice_id int [ref: > practices.id]
+  available_times "{from: time, to: time}[]"
+}
+
+Table users {
+  id int [pk, increment, unique]
+  username varchar [unique]
+  password varchar
+  names varchar
+  lastname varchar
+  role_id int [ref: > roles.id]
+}
+
+Table roles {
+  id int [pk, increment, unique]
+  name Role
+}
+
+Enum Role {
+  Doctor
+  Secretary
+  Custom
+}
+
+Enum Addressable {
+  Practice
+  Patient
+}
+
+Enum AppointmentType {
+  Visit
+  Practice
+}
+
+Enum AppointmentStatus {
+  Canceled
+  Done
+  Missed
+  Pending
+}
