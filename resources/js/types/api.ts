@@ -33,5 +33,5 @@ export type AppointmentResponse = Omit<Appointment, "date" | "time"> & {
 
 export type AppointmentPayload = Omit<
     Appointment,
-    "id" | "patient" | "time"
+    "id" | "patient" | "time" | "doctor"
 > & { time: string };
