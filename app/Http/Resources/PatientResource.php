@@ -30,7 +30,8 @@ class PatientResource extends JsonResource
             'dateOfBirth' => $this->resource->date_of_birth,
             'sex' => strtoupper($this->resource->sex),
             'healthcare' => $this->resource->healthcare,
-            'address' => (string) $this->resource->address,
+            'address' => $this->resource->address ? (string) $this->resource->address : null,
+
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
@@ -25,9 +26,12 @@ class LoginController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        $user_resource = (new UserResource($user))->resolve();
+
         return response([
             'token' => $token,
-            ...$user->toArray(),
+            ...$user_resource,
+
         ], Response::HTTP_OK);
     }
 }

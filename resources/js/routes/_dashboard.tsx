@@ -88,15 +88,7 @@ function DashboardLayout() {
 
     const { user, signOut, signOutIsPending } = useAuth();
 
-    const avatarFallback = useMemo(
-        () =>
-            user?.name
-                .split(" ")
-                .map((name) => name[0])
-                .join("")
-                .slice(0, 2) ?? "NN",
-        [user],
-    );
+    const avatarFallback = useMemo(() => user.names[0] + user.lastName[0], []);
 
     return (
         <>

@@ -6,12 +6,19 @@ export type User = {
     id: number;
     avatar: string;
     username: string;
-    name: string;
-    roles: Role[];
-    created_at: Date;
-    updated_at: Date;
-};
+    names: string;
+    lastName: string;
+    fullName: string;
+    joinedOn: string;
+} & (
+    | {
+          role: "doctor";
+          meta: {
+              mp: string;
+              dni: string;
+          };
+      }
+    | { role: "secretary"; meta: { dni: string } }
+);
 
 export type Token = string;
-
-export type Role = "admin" | "practician";

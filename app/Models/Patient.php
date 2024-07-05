@@ -19,11 +19,11 @@ class Patient extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne<Address>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne<Address>
      */
     public function address()
     {
-        return $this->hasOne(Address::class);
+        return $this->morphOne(Address::class, 'addressable');
     }
 
     /**

@@ -24,7 +24,7 @@ class StorePatientController extends Controller
 
             if (isset($validated['address'])) {
                 $validated_address = Arr::where($validated['address'], fn ($property) => $property !== null);
-                Address::create([...$validated_address, 'patient_id' => $patient->id]);
+                Address::create([...$validated_address, 'addressable_id' => $patient->id, 'addressable_type' => Patient::class]);
             }
 
             return $patient;

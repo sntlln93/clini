@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('username')->unique();
-            $table->enum('type', ['practice', 'patient'])->default('practice');
-            $table->string('name');
             $table->string('password');
+
+            $table->string('names');
+            $table->string('lastname');
+            $table->json('meta');
+            $table->enum('role', ['doctor', 'secretary'])->default('secretary');
+
             $table->rememberToken();
             $table->timestamps();
         });

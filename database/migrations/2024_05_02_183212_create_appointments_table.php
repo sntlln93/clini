@@ -24,8 +24,8 @@ return new class extends Migration
             $table->time('time');
             $table->enum('type', $appointment_types)->default(AppointmentType::Practice->name);
             $table->enum('status', $appointment_statuses)->default(AppointmentStatus::Pending->name);
-            $table->foreignId('patient_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('patient_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('phone');
             $table->string('reason')->nullable();
             $table->string('notes')->nullable();

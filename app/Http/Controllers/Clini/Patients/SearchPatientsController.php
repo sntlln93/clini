@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Clini\Patients;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Paginated\PaginatedPatientRequest;
+use App\Http\Requests\SearchPatientsRequest;
 use App\Http\Resources\PatientCollection;
 use App\Models\Patient;
 
 class SearchPatientsController extends Controller
 {
-    public function __invoke(PaginatedPatientRequest $request): PatientCollection
+    public function __invoke(SearchPatientsRequest $request): PatientCollection
     {
         $validated = $request->validated();
 

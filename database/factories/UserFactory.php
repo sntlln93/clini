@@ -23,11 +23,19 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $role = Arr::random(['doctor', 'secretary']);
+        $meta = [
+            'doctor' => ['mp' => '547', 'dni' => '37415820'],
+            'secretary' => ['dni' => '37415820'],
+        ];
+
         return [
             'username' => fake()->userName(),
-            'type' => Arr::random(['patient', 'practice']),
-            'name' => fake()->name(),
+            'role' => $role,
+            'names' => fake()->name(),
+            'lastname' => fake()->lastName(),
             'password' => static::$password ??= Hash::make('1234'),
+            'meta' => json_encode($meta[$role]),
         ];
     }
 }

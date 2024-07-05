@@ -15,20 +15,12 @@ class Appointment extends Model
         'type',
         'status',
         'patient_id',
-        'user_id',
         'phone',
         'reason',
         'notes',
         'duration',
+        'user_id',
     ];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User, self>
-     */
-    public function practice()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Patient, self>
@@ -36,5 +28,13 @@ class Appointment extends Model
     public function patient()
     {
         return $this->belongsTo(Patient::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User, self>
+     */
+    public function doctor()
+    {
+        return $this->belongsTo(User::class);
     }
 }

@@ -13,13 +13,20 @@ class UserResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @return array<string>
+     * @return array<string,mixed>
      */
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
+            'avatar' => null,
             'username' => $this->username,
-            'name' => $this->name,
+            'names' => $this->names,
+            'lastName' => $this->lastname,
+            'fullName' => $this->lastname.', '.$this->names,
+            'meta' => json_decode($this->meta ?? '{}'),
+            'role' => $this->role,
+            'joinedOn' => $this->created_at?->format('y-m-d'),
         ];
     }
 }

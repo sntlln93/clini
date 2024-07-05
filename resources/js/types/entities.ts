@@ -1,3 +1,4 @@
+import { User } from "./auth";
 import { AppointmentStatus, AppointmentType } from "./enums/entities";
 
 export type Appointment = {
@@ -7,6 +8,7 @@ export type Appointment = {
     type: AppointmentType;
     status: AppointmentStatus;
     patient: Patient;
+    doctor: User;
     phone: string;
     reason?: string;
     notes?: string;

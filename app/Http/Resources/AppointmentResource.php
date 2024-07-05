@@ -34,6 +34,7 @@ class AppointmentResource extends JsonResource
             'type' => $this->resource->type,
             'status' => $this->resource->status,
             'patient' => new PatientResource($this->resource->patient),
+            'doctor' => new UserResource($this->resource->doctor),
             'phone' => $formatted_phone_number,
             'reason' => $this->resource->reason,
             'notes' => $this->resource->notes,

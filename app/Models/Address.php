@@ -17,14 +17,16 @@ class Address extends Model
         // 'country',
         // 'zip_code',
         'patient_id',
+        'addressable_id',
+        'addressable_type',
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Patient, self>
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo<Model, self>
      */
-    public function patient()
+    public function addressable()
     {
-        return $this->belongsTo(Patient::class);
+        return $this->morphTo();
     }
 
     public function __toString()
