@@ -57,22 +57,11 @@ Table schedulable_times {
 
 Table users {
   id int [pk, increment, unique]
-  username varchar [unique]
+  email varchar [unique]
   password varchar
   names varchar
   lastname varchar
-  role_id int [ref: > roles.id]
-}
-
-Table roles {
-  id int [pk, increment, unique]
-  name Role
-}
-
-Enum Role {
-  Doctor
-  Secretary
-  Custom
+  roles "json"
 }
 
 Enum Addressable {

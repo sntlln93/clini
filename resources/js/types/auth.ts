@@ -10,15 +10,18 @@ export type User = {
     lastName: string;
     fullName: string;
     joinedOn: string;
-} & (
+    roles: Role[];
+};
+
+type Role =
     | {
-          role: "doctor";
-          meta: {
-              mp: string;
-              dni: string;
-          };
+          name: string;
+          mp: string;
+          dni: string;
       }
-    | { role: "secretary"; meta: { dni: string } }
-);
+    | {
+          name: string;
+          dni: string;
+      };
 
 export type Token = string;

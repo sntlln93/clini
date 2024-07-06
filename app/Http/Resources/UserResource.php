@@ -24,8 +24,7 @@ class UserResource extends JsonResource
             'names' => $this->names,
             'lastName' => $this->lastname,
             'fullName' => $this->lastname.', '.$this->names,
-            'meta' => json_decode($this->meta ?? '{}'),
-            'role' => $this->role,
+            'roles' => json_decode($this->meta ?? '{}'),
             'joinedOn' => $this->created_at?->format('y-m-d'),
         ];
     }

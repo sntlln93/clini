@@ -18,8 +18,7 @@ return new class extends Migration
 
             $table->string('names');
             $table->string('lastname');
-            $table->json('meta');
-            $table->enum('role', ['doctor', 'secretary'])->default('secretary');
+            $table->json('roles');
 
             $table->rememberToken();
             $table->timestamps();
