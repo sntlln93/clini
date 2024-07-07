@@ -8,6 +8,11 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { Router } from "./router";
 import queryClient from "./queryClient";
+import { z } from "zod";
+import { validationMessages } from "@/lib/consts/validation";
+
+// Define los mensajes de error en español
+z.setErrorMap(validationMessages);
 
 const rootElement = document.getElementById("app")!;
 if (!rootElement.innerHTML) {

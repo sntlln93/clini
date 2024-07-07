@@ -4,26 +4,6 @@ const ALLOWED_NAME_CHARACTERS =
     "Sólo se permiten letras mayúsculas y minúsculas, letras acentuadas y el signo apostrófe";
 const NAME_PATTERN = /^[a-zA-ZÀ-ÿ\s']+$/;
 
-// Define los mensajes de error en español
-const validationMessages: z.ZodErrorMap = (error, _ctx) => {
-    switch (error.code) {
-        case z.ZodIssueCode.invalid_type:
-            if (error.received === "undefined") {
-                return { message: "Este campo es obligatorio" };
-            }
-            break;
-        case z.ZodIssueCode.too_small:
-            return {
-                message: `Este campo debe tener al menos ${error.minimum} caracteres`,
-            };
-        case z.ZodIssueCode.custom:
-            return { message: error.message ?? "Error de validación" };
-    }
-    return { message: "Error de validación" };
-};
-
-z.setErrorMap(validationMessages);
-
 // Define el esquema con los mensajes de error personalizados
 export const createPatientSchema = z.object({
     dni: z
