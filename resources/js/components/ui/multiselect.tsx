@@ -51,7 +51,7 @@ function MultiSelect({
                     aria-expanded={open}
                     className={cn(
                         buttonVariants({ variant: "outline" }),
-                        `w-full justify-between ${selected.length > 1 ? "h-full" : "h-10"}`,
+                        "w-full justify-between min-h-10 h-auto",
                     )}
                     onClick={() => setOpen(!open)}
                 >
