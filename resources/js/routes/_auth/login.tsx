@@ -17,7 +17,7 @@ import { useAuth } from "@/lib/hooks/useAuth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-export const Route = createFileRoute("/_public/login")({
+export const Route = createFileRoute("/_auth/login")({
     component: LoginPage,
 });
 
@@ -108,14 +108,20 @@ export function LoginPage() {
                             </Form>
                         </div>
 
-                        <p className="text-right text-sm text-muted-foreground">
+                        <div className="flex flex-col text-right text-sm text-muted-foreground">
+                            <Link
+                                to="/register"
+                                className="font-bold hover:text-primary"
+                            >
+                                Crea tu cuenta
+                            </Link>
                             <Link
                                 href="/forgot-password"
                                 className="font-bold hover:text-primary"
                             >
                                 ¿Olvidaste tu contraseña?
-                            </Link>{" "}
-                        </p>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

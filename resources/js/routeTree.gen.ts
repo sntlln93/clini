@@ -13,11 +13,13 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as PublicImport } from './routes/_public'
 import { Route as DashboardImport } from './routes/_dashboard'
+import { Route as AuthImport } from './routes/_auth'
 import { Route as DashboardIndexImport } from './routes/_dashboard/index'
-import { Route as PublicLoginImport } from './routes/_public/login'
 import { Route as DashboardSettingsImport } from './routes/_dashboard/settings'
 import { Route as DashboardRoadmapImport } from './routes/_dashboard/roadmap'
 import { Route as DashboardPatientsImport } from './routes/_dashboard/patients'
+import { Route as AuthRegisterImport } from './routes/_auth/register'
+import { Route as AuthLoginImport } from './routes/_auth/login'
 
 // Create/Update Routes
 
@@ -31,14 +33,14 @@ const DashboardRoute = DashboardImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AuthRoute = AuthImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const DashboardIndexRoute = DashboardIndexImport.update({
   path: '/',
   getParentRoute: () => DashboardRoute,
-} as any)
-
-const PublicLoginRoute = PublicLoginImport.update({
-  path: '/login',
-  getParentRoute: () => PublicRoute,
 } as any)
 
 const DashboardSettingsRoute = DashboardSettingsImport.update({
@@ -56,10 +58,27 @@ const DashboardPatientsRoute = DashboardPatientsImport.update({
   getParentRoute: () => DashboardRoute,
 } as any)
 
+const AuthRegisterRoute = AuthRegisterImport.update({
+  path: '/register',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthLoginRoute = AuthLoginImport.update({
+  path: '/login',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
     '/_dashboard': {
       id: '/_dashboard'
       path: ''
@@ -73,6 +92,20 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof PublicImport
       parentRoute: typeof rootRoute
+    }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/register': {
+      id: '/_auth/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof AuthRegisterImport
+      parentRoute: typeof AuthImport
     }
     '/_dashboard/patients': {
       id: '/_dashboard/patients'
@@ -95,13 +128,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardSettingsImport
       parentRoute: typeof DashboardImport
     }
-    '/_public/login': {
-      id: '/_public/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof PublicLoginImport
-      parentRoute: typeof PublicImport
-    }
     '/_dashboard/': {
       id: '/_dashboard/'
       path: '/'
@@ -115,13 +141,13 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
+  AuthRoute: AuthRoute.addChildren({ AuthLoginRoute, AuthRegisterRoute }),
   DashboardRoute: DashboardRoute.addChildren({
     DashboardPatientsRoute,
     DashboardRoadmapRoute,
     DashboardSettingsRoute,
     DashboardIndexRoute,
   }),
-  PublicRoute: PublicRoute.addChildren({ PublicLoginRoute }),
 })
 
 /* prettier-ignore-end */
@@ -132,8 +158,16 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/_auth",
         "/_dashboard",
         "/_public"
+      ]
+    },
+    "/_auth": {
+      "filePath": "_auth.tsx",
+      "children": [
+        "/_auth/login",
+        "/_auth/register"
       ]
     },
     "/_dashboard": {
@@ -146,10 +180,15 @@ export const routeTree = rootRoute.addChildren({
       ]
     },
     "/_public": {
-      "filePath": "_public.tsx",
-      "children": [
-        "/_public/login"
-      ]
+      "filePath": "_public.tsx"
+    },
+    "/_auth/login": {
+      "filePath": "_auth/login.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/register": {
+      "filePath": "_auth/register.tsx",
+      "parent": "/_auth"
     },
     "/_dashboard/patients": {
       "filePath": "_dashboard/patients.tsx",
@@ -162,10 +201,6 @@ export const routeTree = rootRoute.addChildren({
     "/_dashboard/settings": {
       "filePath": "_dashboard/settings.tsx",
       "parent": "/_dashboard"
-    },
-    "/_public/login": {
-      "filePath": "_public/login.tsx",
-      "parent": "/_public"
     },
     "/_dashboard/": {
       "filePath": "_dashboard/index.tsx",
