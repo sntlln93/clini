@@ -26,9 +26,13 @@ export const Route = createFileRoute("/_auth/register")({
 });
 
 const steps = [
-    { label: "Cuenta", description: "esta es una descripcion", icon: User },
-    { label: "Consultorio" },
-    { label: "Actividad" },
+    {
+        label: "Cuenta",
+        description: "Información personal",
+        icon: User,
+    },
+    { label: "Consultorio", description: "Datos de tu consultorio" },
+    { label: "Actividad", description: "Descripción de tu actividad" },
 ] satisfies StepItem[];
 
 export function RegisterPage() {
@@ -46,12 +50,12 @@ export function RegisterPage() {
     });
 
     function onSubmit(values: RegisterPracticeSchema) {
-        console.log(values);
+        console.log({ ...values });
     }
 
     return (
         <>
-            <div className="flex flex-col h-screen mx-auto max-w-[640px] px-4 py-8 gap-6">
+            <div className="flex flex-col h-screen mx-auto max-w-[640px] px-2 py-8 gap-6">
                 <h1 className="text-2xl font-semibold tracking-tight text-center">
                     Con 3 pasos vas a empezar a organizar los turnos de tu
                     consultorio
@@ -92,8 +96,9 @@ const Footer = () => {
         isDisabledStep: isFirstStep,
         isLastStep,
     } = useStepper();
+
     return (
-        <div className="w-full flex justify-end gap-2 mt-auto">
+        <div className="w-full flex justify-between gap-2 mt-auto">
             <Button
                 type="button"
                 disabled={isFirstStep}

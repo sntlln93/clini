@@ -10,8 +10,7 @@ import {
 
 import { RegisterPracticeSchema } from "@/lib/schemas/register-practice.schema";
 import { useFormContext } from "react-hook-form";
-import { specialties } from "@/lib/consts/specialties";
-import { MultiSelect } from "@/components/ui/multiselect";
+import { Settings } from "lucide-react";
 
 export function PracticeFields() {
     const form = useFormContext<RegisterPracticeSchema>();
@@ -32,26 +31,12 @@ export function PracticeFields() {
                             />
                         </FormControl>
                         <FormMessage />
-                    </FormItem>
-                )}
-            />
-
-            <FormField
-                control={form.control}
-                name="specialties"
-                render={({ field }) => (
-                    <FormItem className="mb-5">
-                        <FormLabel>Especialidad</FormLabel>
-                        <MultiSelect
-                            selected={field.value}
-                            options={specialties.map((specialty) => ({
-                                value: specialty,
-                                label: specialty,
-                            }))}
-                            onChange={field.onChange}
-                        />
-                        <FormDescription>
-                            Podés elegir más de una
+                        <FormDescription className="flex items-center">
+                            <span>
+                                Puedes modificar esto desde la configuración de
+                                la cuenta
+                            </span>
+                            <Settings className="h-4 w-4 inline ml-1" />
                         </FormDescription>
                     </FormItem>
                 )}

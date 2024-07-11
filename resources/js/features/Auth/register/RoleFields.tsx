@@ -1,13 +1,16 @@
-import { FormField, FormItem, FormLabel } from "@/components/ui/form";
+import {
+    FormField,
+    FormItem,
+    FormDescription,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
 import { RegisterPracticeSchema } from "@/lib/schemas/register-practice.schema";
 import { useFormContext } from "react-hook-form";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { CircleCheck, CircleHelp } from "lucide-react";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { CircleCheck } from "lucide-react";
+import { specialties } from "@/lib/consts/specialties";
+import { MultiSelect } from "@/components/ui/multiselect";
 
 export function RoleFields() {
     const form = useFormContext<RegisterPracticeSchema>();
@@ -21,20 +24,20 @@ export function RoleFields() {
                     <FormItem>
                         <FormLabel htmlFor="toggleRole">
                             Indica cuál es tu actividad en el consultorio
-                            <Tooltip>
-                                <TooltipTrigger>
-                                    <CircleHelp className=" ml-2 h-4 w-4 stroke-muted-foreground" />
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                    <p>Add to library</p>
-                                </TooltipContent>
-                            </Tooltip>
                         </FormLabel>
                         <ToggleGroup
+                            role="select"
                             id="toggleRole"
                             type="multiple"
                             className="flex-col"
-                            onValueChange={field.onChange}
+                            onValueChange={(value) => {
+                                if (!value.includes("doctor")) {
+                                    form.resetField("specialties");
+                                }
+
+                                field.onChange(value);
+                            }}
+                            defaultValue={field.value}
                         >
                             <ToggleGroupItem
                                 value="doctor"
@@ -57,9 +60,41 @@ export function RoleFields() {
                                 />
                             </ToggleGroupItem>
                         </ToggleGroup>
+                        <FormMessage />
+                        <FormDescription>
+                            Si elijes la opción{" "}
+                            <code className="bg-slate-200 text-primary p-1 rounded">
+                                Atiendo pacientes
+                            </code>{" "}
+                            se te pedirá también, indicar tu especialidad
+                        </FormDescription>
                     </FormItem>
                 )}
             />
+
+            {form.getValues("roles").includes("doctor") ? (
+                <FormField
+                    control={form.control}
+                    name="specialties"
+                    render={({ field }) => (
+                        <FormItem className="mb-5">
+                            <FormLabel>Especialidad</FormLabel>
+                            <MultiSelect
+                                selected={field.value ?? []}
+                                options={specialties.map((specialty) => ({
+                                    value: specialty,
+                                    label: specialty,
+                                }))}
+                                onChange={field.onChange}
+                            />
+                            <FormMessage />
+                            <FormDescription>
+                                Puedes elegir más de una
+                            </FormDescription>
+                        </FormItem>
+                    )}
+                />
+            ) : null}
         </>
     );
 }
